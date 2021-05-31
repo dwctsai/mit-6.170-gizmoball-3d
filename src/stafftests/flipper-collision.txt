@@ -1,0 +1,297 @@
+Triangle g0 15 4
+Rotate g0
+Rotate g0
+Rotate g0
+
+Square g1 15 6
+
+RightFlipper g2 4 11
+Rotate g2
+Rotate g2
+Rotate g2
+
+RightFlipper g3 6 7
+
+Triangle g4 1 9
+Rotate g4
+Rotate g4
+
+Triangle g5 16 9
+Rotate g5
+
+Triangle g6 18 8
+Rotate g6
+Rotate g6
+Rotate g6
+
+RightFlipper g7 8 9
+Rotate g7
+
+RightFlipper g8 10 7
+
+Square g9 2 9
+
+Triangle g10 18 12
+
+Square g11 16 13
+
+Square g12 8 14
+
+Triangle g13 14 8
+Rotate g13
+
+RightFlipper g14 10 11
+Rotate g14
+Rotate g14
+Rotate g14
+
+Square g15 4 8
+
+Triangle g16 2 13
+Rotate g16
+
+Square g17 8 4
+
+LeftFlipper g18 14 11
+Rotate g18
+Rotate g18
+
+Square g19 12 14
+
+Square g20 3 14
+
+Square g21 12 4
+
+Square g22 17 8
+
+Square g23 14 5
+
+Square g24 5 14
+
+Triangle g25 5 4
+Rotate g25
+Rotate g25
+
+Square g26 17 12
+
+Square g27 15 13
+
+Square g28 6 5
+
+Square g29 5 6
+
+Square g30 16 8
+
+Triangle g31 2 8
+Rotate g31
+Rotate g31
+
+Triangle g32 1 12
+Rotate g32
+
+Triangle g33 16 12
+Rotate g33
+Rotate g33
+
+Square g34 18 11
+
+Square g35 7 14
+
+Square g36 14 7
+
+Square g37 7 4
+
+Square g38 4 7
+
+Triangle g39 3 9
+
+Square g40 2 12
+
+Square g41 11 14
+
+Square g42 11 4
+
+Square g43 3 13
+
+Triangle g44 17 7
+Rotate g44
+Rotate g44
+Rotate g44
+
+Square g45 15 8
+
+Square g46 13 5
+
+Triangle g47 5 13
+Rotate g47
+Rotate g47
+Rotate g47
+
+Triangle g48 17 11
+Rotate g48
+Rotate g48
+
+Square g49 15 5
+
+LeftFlipper g50 4 9
+
+Square g51 16 7
+
+LeftFlipper g52 8 7
+Rotate g52
+
+Square g53 1 11
+
+Square g54 18 10
+
+LeftFlipper g55 8 11
+Rotate g55
+Rotate g55
+
+LeftFlipper g56 10 9
+
+LeftFlipper g57 12 7
+Rotate g57
+
+Triangle g58 2 11
+Rotate g58
+Rotate g58
+Rotate g58
+
+Square g59 3 8
+
+RightFlipper g60 14 9
+Rotate g60
+
+Square g61 10 14
+
+Triangle g62 5 8
+
+Triangle g63 3 12
+Rotate g63
+Rotate g63
+Rotate g63
+
+Square g64 10 4
+
+Square g65 14 14
+
+Square g66 15 7
+
+Square g67 4 14
+
+Triangle g68 12 5
+Rotate g68
+
+Square g69 14 4
+
+Triangle g70 17 10
+Rotate g70
+
+Square g71 14 6
+
+Square g72 6 14
+
+Square g73 5 5
+
+Square g74 6 4
+
+Triangle g75 4 6
+Rotate g75
+Rotate g75
+
+Square g76 17 14
+
+Triangle g77 6 6
+
+Square g78 1 10
+
+Square g79 18 9
+
+Triangle g80 2 10
+
+Triangle g81 3 7
+Rotate g81
+Rotate g81
+
+Square g82 16 14
+
+Square g83 9 14
+
+Square g84 5 7
+
+Triangle g85 7 5
+
+Square g86 9 4
+
+Square g87 13 14
+
+Triangle g88 14 13
+Rotate g88
+Rotate g88
+
+Triangle g89 16 6
+Rotate g89
+Rotate g89
+Rotate g89
+
+Square g90 13 4
+
+Square g91 4 13
+
+Square g92 17 9
+
+Triangle g93 13 6
+Rotate g93
+
+Square g94 15 14
+
+Square g95 17 13
+
+
+Ball b96 7.0 13.0 5.0 20.0
+
+Connect g57 g57
+
+Connect g56 g56
+
+Connect g55 g55
+
+Connect g61 g52
+
+Connect g24 g7
+
+Connect g87 g2
+
+Connect g18 g18
+
+Connect g88 g18
+
+Connect g12 g55
+
+Connect g52 g52
+
+Connect g35 g14
+
+Connect g14 g14
+
+Connect g19 g8
+
+Connect g72 g56
+
+Connect g41 g57
+
+Connect g50 g50
+
+Connect g8 g8
+
+Connect g7 g7
+
+Connect g83 g3
+
+Connect g60 g60
+
+Connect g3 g3
+
+Connect g2 g2
+

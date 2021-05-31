@@ -1,0 +1,15 @@
+Square g0 16 18
+
+Absorber g1 0 19 20 20
+
+Square g2 17 18
+
+Square g3 18 18
+
+Square g4 19 18
+
+
+Ball b5 6.25 13.25 0.0 10.0
+
+Connect g1 g1
+

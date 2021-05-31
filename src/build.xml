@@ -1,0 +1,62 @@
+<project name="Gizmoball" default="test" basedir=".">
+  <description>build file for se042's 6.170 final project</description>
+<!-- Read more about ant here: http://ant.apache.  There's also a nice
+tutorial here:
+http://www.onjava.com/pub/a/onjava/2001/02/22/open_source.html?page=1
+-->
+  <path id="classpath">
+    <fileset dir="/mit/6.170/lib" includes="**/*.jar"/>
+    <pathelement location="classes"/>
+  </path>
+
+  <target name="compile" description="Compiles the source to the classes directory.">
+    <mkdir dir="classes"/>
+    <javac classpathref="classpath" srcdir="." destdir="classes"/>
+    <copy todir="classes/gui/images">
+        <fileset dir="gui/images" includes="*.jpg *.png *.gif"/>
+    </copy>
+    <copy todir="classes/gui/textures">
+        <fileset dir="gui/textures" includes="*.jpg *.png *.gif"/>
+    </copy>
+  </target>
+
+  <target name="test" depends="compile" description="Executes all classes that end in Test as JUnit tests.">
+    <junit haltonfailure="yes" showoutput="yes">
+      <classpath refid="classpath"/>
+      <formatter type="brief" usefile="false"/>    
+      <batchtest >
+        <fileset dir="classes" includes="**/*Test.class" />
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="run" depends="compile" description="Runs the main class.">
+    <java classname="gui/Gizmoball" classpathref="classpath" fork="yes" /> <!-- change the classname to your main class. -->
+  </target>
+
+  <target name="clean" description="Removes all generated files." >
+    <delete dir="classes"/>
+    <delete dir="doc/api"/>
+    <delete file="se042.jar"/>
+  </target>
+
+  <target name="jar" depends="compile" description="Creates an executable jar for the project." >
+    <jar jarfile="se042.jar" basedir="classes">
+      <manifest>
+        <attribute name="Main-Class" value="gui/Gizmoball"/> <!-- change the Main-Class value to your main class. -->
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="javadoc" description="Generates 6.170 Javadoc for the project.">
+    <javadoc destdir="doc/api" windowtitle="se042 6.170 final project" Private="yes" sourcepath="src" packagenames="*">
+      <link href="http://java.sun.com/j2se/1.4.1/docs/api/"/>
+      <link href="http://www.junit.org/junit/javadoc/3.8.1/"/>
+      <taglet name="javadoc6170.RequiresTaglet"/>
+      <taglet name="javadoc6170.EffectsTaglet"/>
+      <taglet name="javadoc6170.ModifiesTaglet"/>
+      <taglet name="javadoc6170.SpecfieldTaglet"/>
+    </javadoc>
+  </target>
+
+</project>

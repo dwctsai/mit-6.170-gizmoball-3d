@@ -1,0 +1,77 @@
+LeftFlipper LF1 8 16
+RightFlipper RF1 10 16
+
+Circle C1 0 16
+Circle C2 1 16
+Circle C3 2 16
+Circle C4 3 16
+Circle C5 4 16
+Circle C6 5 16
+Circle C7 6 16
+Circle C8 7 16
+
+Circle C9 12 16
+Circle C10 13 16
+Circle C11 14 16
+Circle C12 15 16
+Circle C13 16 16
+Circle C14 17 16
+Circle C15 18 16
+Circle C16 19 16
+
+Triangle T1 15 4
+Rotate T1
+Rotate T1
+Triangle T2 14 5
+Rotate T2
+Rotate T2
+Triangle T3 13 6
+Rotate T3
+Rotate T3
+Square S1 14 6
+Square S2 15 5
+Square S3 15 6
+
+Triangle T4 4 8
+Rotate T4
+Rotate T4
+Rotate T4
+Triangle T5 5 9
+Rotate T5
+Rotate T5
+Rotate T5
+Triangle T6 6 10
+Rotate T6
+Rotate T6
+Rotate T6
+Square S4 4 9
+Square S5 4 10
+Square S6 5 10
+
+Circle C17 0 4
+Circle C18 1 4
+Circle C19 2 4
+LeftFlipper LF2 3 4
+RightFlipper RF2 5 4
+Circle C20 7 4
+Circle C21 8 4
+Circle C22 9 4
+
+
+Absorber A1 0 19 20 20
+
+Ball B1 1 10 2.0 4.0
+Ball B2 18 3 5.0 6.0
+
+Connect T1 LF2
+Connect T2 LF2
+Connect T3 LF2
+
+Connect T4 RF2
+Connect T5 RF2
+Connect T6 RF2
+
+MouseConnect left-click press LF1
+MouseConnect left-click release  LF1
+MouseConnect right-click press RF1
+MouseConnect right-click release RF1

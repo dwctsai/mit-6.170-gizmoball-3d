@@ -1,0 +1,161 @@
+Square g0 7 15
+
+Square g1 7 8
+
+Triangle g2 10 16
+Rotate g2
+Rotate g2
+Rotate g2
+
+Square g3 12 19
+
+Square g4 14 15
+
+Square g5 12 10
+
+Square g6 13 9
+
+Square g7 14 8
+
+Square g8 7 4
+
+Square g9 9 3
+
+Square g10 7 16
+
+Square g11 14 4
+
+Square g12 9 19
+
+Square g13 7 12
+
+Square g14 9 10
+
+Square g15 8 11
+
+RightFlipper g16 11 7
+
+Square g17 14 16
+
+Square g18 14 12
+
+Square g19 7 6
+
+Square g20 13 3
+
+Square g21 7 17
+
+Square g22 7 9
+
+Triangle g23 11 16
+Rotate g23
+Rotate g23
+
+Square g24 14 6
+
+Square g25 13 19
+
+Square g26 14 17
+
+Triangle g27 12 11
+Rotate g27
+
+Square g28 13 10
+
+Square g29 14 9
+
+Square g30 8 4
+
+Square g31 10 3
+
+Square g32 8 16
+
+Square g33 7 18
+
+Circle g34 19 19
+
+Square g35 10 19
+
+Triangle g36 10 10
+
+Square g37 7 13
+
+Triangle g38 9 11
+
+Triangle g39 8 12
+
+Square g40 14 18
+
+Square g41 14 13
+
+Square g42 7 19
+
+Circle g43 0 0
+
+Square g44 7 10
+
+Square g45 8 9
+
+Square g46 12 16
+
+Square g47 14 19
+
+Square g48 14 10
+
+Square g49 13 11
+
+Square g50 7 5
+
+Square g51 11 3
+
+Square g52 7 7
+
+RightFlipper g53 9 5
+Rotate g53
+Rotate g53
+
+Square g54 9 16
+
+Square g55 14 5
+
+Square g56 11 19
+
+Triangle g57 11 10
+Rotate g57
+
+Square g58 14 7
+
+Square g59 7 14
+
+Square g60 8 3
+
+Square g61 14 14
+
+Square g62 13 4
+
+Square g63 8 19
+
+Square g64 7 11
+
+Square g65 8 10
+
+Square g66 13 16
+
+Square g67 14 11
+
+Triangle g68 13 12
+Rotate g68
+
+Square g69 12 3
+
+
+Ball b70 11.0 12.0 0.0 0.0
+
+Connect g2 g53
+
+Connect g23 g16
+
+KeyConnect key 32 DOWN g16
+
+KeyConnect key 32 DOWN g53
+

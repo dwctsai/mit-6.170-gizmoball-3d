@@ -1,0 +1,118 @@
+Syntax
+<file> ::= <commandline>*
+
+<commandline> ::= <command>"\n" | "\n"
+
+<command> ::= <gizmoOp> <name> <double-triple> <cor>               |
+              Absorber <name> <double-triple> <double-triple>      |
+              Flipper <name> <double-triple> <cor> <type>          |
+              Ball <name> <double-triple> <double-triple> <double> |
+              Jezzmo <name> <double-triple> <double> <jezzType>    |
+              Rotate <type> <name>                                 |
+              Delete <name>                                        |
+              Move <name> <double-triple>                          |
+              Connect <name> <name>                                |
+              Connect <name> <name> <action>                       |
+              KeyConnect <keyid> <name>                            |
+              KeyConnect <keyid> <name> <action>                   |
+	      MouseConnect <clickId> <name>                        |
+	      MouseConnect <clickId> <name> <action>               |
+              Gravity <double-triple>                              |
+              Friction <double> <double>
+
+
+<name> ::= IDENTIFIER
+
+<cor> ::= DOUBLE
+
+<type> ::= IDENTIFIER
+
+<gizmoOp> ::= Square | Circle | Triangle | Flipper
+
+<double-triple> ::= DOUBLE DOUBLE DOUBLE
+
+<keyid> ::= "key" KEYNUM "down" |
+            "key" KEYNUM "up"
+
+<clickId> = <buttonType> <clickType>
+
+<jezzType> = JEZZTYPE
+
+<buttonType> = MOUSENUM
+
+<clickType> = "press" | "release"
+
+<double> ::= DOUBLE
+
+<action> ::= IDENTIFIER
+
+IDENTIFIER represents any string composed only from the characters {'0'..'9','A'..'Z','a..z','_'}. The identifier "OuterWalls" is a special reserved word which refers to the outer walls; no other item may use this identifier
+DOUBLE represents any floating point number.
+KEYNUM represents any numeric key identifier (which are integers).
+MOUSENUM represents any mouse button identifier (see statics in java.awt.event.MouseEvent).
+JEZZTYPE represents a valid Jezzmo growth direction (see statics in plugins.pieces.Jezzmo3D).
+
+Gizmoball keywords are case insensitive. 
+
+
+
+
+Semantics
+
+"Cube"       (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE cor)
+"Sphere"     (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE cor)
+"TriangleA"  (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE cor)
+"TriangleB"  (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE cor)
+"TriangleC"  (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE cor)
+	Creates the given gizmo with its lower at (x,y,z), in the default orientation and coefficient of reflection cor. Within the file, the name must be unique, and may be used later to refer to this specific gizmo. The default orientation for each gizmo is: 
+Cube
+	none (all orientations are equivalent) 
+Sphere
+	none (all orientations are equivalent) 
+TriangleA
+	The corner is 0,0,0 to 0,0,1, the angled plane is 1,0,0:0,1,0,:0,1,1:1,0,1 (before translation)
+TriangleB
+	The corner is 0,0,0, the angled plane is 1,0,0:0,1,0,:0,0,1 (before translation)
+TriangleC
+	The corners are 0,0,0; 1,0,0; 0,1,0; 0,0,1, the angled plane is 1,1,0:0,1,1,:1,0,1 (before translation)
+
+"Flipper"    (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE cor) (IDENTIFIER orientation)
+	Creates a flipper with its lower corner at (x1,y1,z1) and coefficient of reflection cor. The pivot is at 0.25,1.75,0.25:0.25,1.75,0.75, and the other end is at 0.25,0.25,0.25:0.25,0.25,0.75 (before translation). "orientation" is not processed. Within the file, the name must be unique, and may be used later to refer to this specific flipper.
+
+"Absorber" (IDENTIFIER name) (DOUBLE x1) (DOUBLE y1) (DOUBLE z1) (DOUBLE x2) (DOUBLE y2) (DOUBLE z2)
+	Creates an absorber with its lower corner at (x1,y1,z1) and its upper corner at (x2,y2,z2). The second position must be at least (x1+1,y1+1,z1+1). Within the file, the name must be unique, and may be used later to refer to this specific absorber.
+
+"Jezzmo" (IDENTIFIER name) (DOUBLE x1) (DOUBLE y1) (DOUBLE z1) (DOUBLE v) (DOUBLE cor) (IDENTIFIER orientation)
+	Creates a Jezzmo with its lower corner at (x1,y1,z1), growth velocity v, and growth direction orientation. v must be a positive number and orientation must be one of {Jezzmo3D.X_GROWTH, Jezzmo3D.Y_GROWTH, Jezzmo3D.Z_GROWTH}. Within the file, the name must be unique, and may be used later to refer to this specific Jezzmo.
+ 
+"Ball" (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z) (DOUBLE vx) (DOUBLE vy) (DOUBLE vz) (DOUBLE mass)
+	Creates a ball whose lower corner is (x,y,z), velocity is (vx,vy,vz), and mass is mass. Within the file, the name must be unique, and may be used later to refer to this specific ball.
+
+"Rotate" (IDENTIFIER direction) (IDENTIFIER name)
+	Performs a 90 degree rotation on the item named name. Note that some items (like the absorber, outer walls, or balls) can not be rotated. Rotating a flipper does not change its bounding box but does change its pivot. "direction" must be one of {"XY","YZ","XZ","YX","ZY","ZX"}.
+
+"Delete" (IDENTIFIER name)
+	Deletes the item named name. After this operation, the item will no longer exist. 
+
+"Move" (IDENTIFIER name) (DOUBLE x) (DOUBLE y) (DOUBLE z)
+	Moves the gizmo with the given name so that its lower corner is at (x,y,z).
+
+"Connect" (IDENTIFIER producer) (IDENTIFIER consumer)
+"Connect" (IDENTIFIER producer) (IDENTIFIER consumer) (IDENTIFIER action)
+	Makes the gizmo named by consumer a consumer of the triggers produced by the gizmo described by producer. That is, every time a ball hits the producer, the consumer's action (specified by action) will happen. If action is not specified, the default action is triggered.
+
+"MouseConnect" (MOUSENUM button) "press" (IDENTIFIER consumer)
+"MouseConnect" (MOUSENUM button) "release"   (IDENTIFIER consumer) (IDENTIFIER action)
+	Makes the item named by consumer a consumer of the trigger produced when the mouse button represented by button is pressed (or released, respectively). The action performed is action, or the default action if action is not specified.
+
+"KeyConnect" "key" (KEYNUM num) "down" (IDENTIFIER consumer)
+"KeyConnect" "key" (KEYNUM num) "up"   (IDENTIFIER consumer)
+"KeyConnect" "key" (KEYNUM num) "down" (IDENTIFIER consumer) (IDENTIFIER action)
+"KeyConnect" "key" (KEYNUM num) "up"   (IDENTIFIER consumer) (IDENTIFIER action)
+	Makes the item named by consumer a consumer of the trigger produced when the key represented by num is pressed (or released, respectively). The action performed is action, or the default action if action is not specified.
+
+"Gravity" (DOUBLE gx) (DOUBLE gy) (DOUBLE gz)
+	Changes the gravity of the board to be (gx, gy, gz) L/sec2. This command overrides any previous setting of gravity. If no Gravity command appears in the file the default value is used. 
+
+"Friction" (DOUBLE mu) (DOUBLE mu2)
+	Changes the global friction constants to be mu and mu2 as described in the friction formula. This command overrides any previous setting of friction. If no Friction command appears in the file the default values is used. 

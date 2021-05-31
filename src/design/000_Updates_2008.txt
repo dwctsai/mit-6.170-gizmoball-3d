@@ -1,0 +1,14 @@
+By David Tsai
+
+01/27/2008:
+
+Seems that in Java 3D API 1.5, they deprecated a couple of things.
+Namely, I commented out:
+
+gui.picking.behaviors >>
+
+--PickMouseBehavior.java: All the lines in updateScene()
+
+--PickRotate/Translate/ZoomBehavior.java: Commented out "freePickResult(pr);" in updateScene()
+
+Only commented them out to clear the compile errors, but did not bug-test for possible effects.

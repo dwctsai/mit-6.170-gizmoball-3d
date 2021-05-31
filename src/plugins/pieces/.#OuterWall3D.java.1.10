@@ -1,0 +1,783 @@
+/* @author David Tsai
+ * @created on Apr 20, 2003
+ */
+package plugins.pieces;
+
+import engine.backend.BallPhysics;
+import gui.Arena3D;
+import gui.Arena3DScene;
+import gui.picking.behaviors.BoundsBehavior;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
+
+import javax.media.j3d.Appearance;
+import javax.media.j3d.BoundingBox;
+import javax.media.j3d.BoundingLeaf;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Node;
+import javax.media.j3d.RenderingAttributes;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import physics3d.Cylinder;
+
+import backend.StaticGizmo;
+import backend.event.GizmoEvent;
+import backend.events.exceptions.EventException;
+
+import com.sun.j3d.utils.geometry.Box;
+
+/**
+ * OuterWall3D - a gizmo that represents the outer wall of the gizmoball arena.
+ */
+// AF:
+//   An ADT representing an outer wall bumper in Cartesian space.
+//   OuterWall3D has a location, dimensions, coefficient of reflection, and appearance.
+// RI:
+//   lowerCornerLocation != null &&
+//   xLength != null && xLength >= 0 &&
+//   yLength != null && yLength >= 0 &&
+//   COR != null &&  && COR >= 0 &&
+//   app != null &&
+//   isVisible != null
+
+public class OuterWall3D implements StaticGizmo {
+
+	// GENERAL FIELDS
+	private static int ID = 0;
+	private final int myID;
+	private int cachedHashCode = 0;	
+
+	// GRAPHICS FIELDS
+	private BranchGroup pieceBranch;
+	private TransformGroup pieceTG;
+	private TransformGroup pieceTGR;	
+	private Transform3D pieceT3D;
+	private BranchGroup graphicsSubBranch;
+	private BranchGroup containerSubBranch;
+	private BoundingBox container;
+	private BoundingLeaf containerLeaf;
+	private BoundsBehavior m_BoundsBehavior = null;
+	private Appearance app;
+	private boolean isVisible;
+	private ArrayList allGeometries = new ArrayList();
+	private LinkedList rotationQueue = new LinkedList();	
+
+	// PHYSICS FIELDS
+	private Point3d location;
+	private double xLength;
+	private double yLength;
+	private double zLength;
+	private double COR;
+	private Set connections = new HashSet();
+	private Set physics = new HashSet();
+	private boolean isPhysical;	
+
+	// CONSTRUCTOR 
+	/**
+	 * @effects Creates a OuterWall3D from the given parameters.
+	 */
+	public OuterWall3D(
+		Point3d lowerCornerLocation,
+		double xLength,
+		double yLength,
+		double zLength,
+		double COR,
+		Appearance app,
+		boolean isVisible) {
+
+		// Check RI.
+		if (lowerCornerLocation == null ||
+			xLength < 0 ||
+			yLength < 0 ||
+			zLength < 0 ||
+			COR < 0 ||
+			app == null) {
+			throw new RuntimeException("Invalid attributes passed in!");
+		}
+
+		// Initialize fields.
+		this.xLength = xLength;
+		this.yLength = yLength;
+		this.zLength = zLength;
+		this.COR = COR;
+		this.app = app;
+		this.isVisible = isVisible;
+		this.isPhysical = true;		
+		this.myID = OuterWall3D.ID++;
+		
+
+		// Setup the bounding box.
+		container = new BoundingBox();
+		container.setLower(-xLength / 2.0, -yLength / 2.0, -zLength / 2.0);
+		container.setUpper(xLength / 2.0, yLength / 2.0, zLength / 2.0);
+		containerLeaf = new BoundingLeaf(container);
+		containerLeaf.setCapability(Node.ALLOW_LOCAL_TO_VWORLD_READ);
+
+		// Setup graphics.
+		setupGraphics(lowerCornerLocation);
+	}
+
+	// GRAPHICAL METHODS
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void setupGraphics(Point3d lowerCornerLocation) {
+		// Initialize the transforms for the graphic.
+		pieceTG = new TransformGroup();
+		pieceTGR = new TransformGroup();
+		pieceTG.addChild(pieceTGR);		
+//		pieceTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+//		pieceTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);		
+		pieceTG.setPickable(false);
+		pieceTG.setCollidable(false);	
+		
+		pieceTGR.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		pieceTGR.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);		
+
+		pieceT3D = new Transform3D();
+
+		// Setup the appearance of this piece.
+		RenderingAttributes ra = new RenderingAttributes();
+		ra.setVisible(false);
+		app.setRenderingAttributes(ra);
+
+		// Create the primitive shapes that make up this piece.
+		Box gBox =
+			new Box(
+				((float) xLength) / 2.0f,
+				((float) yLength) / 2.0f,
+				((float) zLength) / 2.0f,
+				app);
+		gBox.setBoundsAutoCompute(false);
+		gBox.setPickable(false);
+		gBox.setCollidable(false);
+
+		allGeometries.add(gBox);
+
+
+		// Arrange the primitive shapes to create the geometry of the piece.
+		graphicsSubBranch = new BranchGroup();
+
+		Transform3D translate = new Transform3D();
+
+		// --add the box shape
+		Vector3d transVec = new Vector3d(0.0, 0.0, 0.0);
+		translate.set(transVec);
+		TransformGroup tempTG1 = new TransformGroup(translate);
+		tempTG1.addChild(gBox);
+		graphicsSubBranch.addChild(tempTG1);
+
+		// Move this piece to its starting location.
+		translate = new Transform3D();
+		transVec =
+			new Vector3d(
+				lowerCornerLocation.x + xLength / 2.0,
+				lowerCornerLocation.y + yLength / 2.0,
+				lowerCornerLocation.z + zLength / 2.0);
+		translate.set(transVec);
+		pieceT3D.set(transVec);
+		pieceTG.setTransform(pieceT3D);
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void updateGraphics() {
+		//DO NOTHING
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void addPiece() {
+		// Add this to the list of gizmos.
+		Arena3DScene.allOuterWalls.add(this);
+		Arena3DScene.allGizmos.add(this);
+		Arena3DScene.TGtoPiece.put(pieceTG, this);
+
+		// Create the main pieceBranch.
+		pieceBranch = new BranchGroup();
+		pieceBranch.setCapability(BranchGroup.ALLOW_DETACH);
+
+		// Transform pieceTG to the starting position.
+		pieceTG.setTransform(pieceT3D);
+		pieceBranch.addChild(pieceTG);
+
+		// Complete the graphics sub-branch.
+		graphicsSubBranch.compile();
+		pieceTGR.addChild(graphicsSubBranch);
+
+		// Create the container sub-branch. 
+		containerSubBranch = new BranchGroup();
+		m_BoundsBehavior = new BoundsBehavior(container);
+		m_BoundsBehavior.setSchedulingBounds(Arena3D.bounds);
+		m_BoundsBehavior.addBehaviorToParentGroup(containerSubBranch);
+		if (!isVisible) {
+			m_BoundsBehavior.setEnable(false);
+			m_BoundsBehavior.setSchedulingBounds(Arena3D.boundsDisable);
+		}
+		containerSubBranch.addChild(containerLeaf);
+		containerSubBranch.compile();
+		pieceTG.addChild(containerSubBranch);
+
+		// Add pieceBranch branch to Arena3DScene's piecesBranch.	
+		pieceBranch.compile();
+		Arena3DScene.piecesBranch.addChild(pieceBranch);
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void removePiece() {
+		// Remove this from the list of gizmos.
+		Arena3DScene.allOuterWalls.remove(this);		
+		Arena3DScene.allGizmos.remove(this);
+		Arena3DScene.TGtoPiece.remove(pieceTG);
+
+		// Remove this piece's parent BranchGroup from the scene.
+		pieceBranch.detach();
+		Arena3DScene.piecesBranch.removeChild(pieceBranch);
+	}
+
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public Point3d getContainerLowerLocation() {
+		Point3d lp = new Point3d();
+		container.getLower(lp);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(lp);
+		
+		Point3d up = new Point3d();
+		container.getUpper(up);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(up);		
+		
+		lp.x = (lp.x < up.x) ? lp.x : up.x;
+		lp.y = (lp.y < up.y) ? lp.y : up.y;
+		lp.z = (lp.z < up.z) ? lp.z : up.z;
+
+		return lp;
+	}
+
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public Point3d getContainerUpperLocation() {
+		Point3d lp = new Point3d();
+		container.getLower(lp);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(lp);
+
+		Point3d up = new Point3d();
+		container.getUpper(up);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(up);
+		
+		up.x = (lp.x > up.x) ? lp.x : up.x;
+		up.y = (lp.y > up.y) ? lp.y : up.y;
+		up.z = (lp.z > up.z) ? lp.z : up.z;
+				
+		return up;
+	}
+
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	
+	public void rotateXY90Graphics() {
+		Transform3D temp = new Transform3D();
+		temp.rotZ(Math.PI/2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+		
+		rotationQueue.add("XY");
+	}
+	
+	
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	
+	public void rotateXZ90Graphics() {
+		Transform3D temp = new Transform3D();
+		temp.rotY(Math.PI/2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+		
+		rotationQueue.add("XZ");		
+	}
+	
+	
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	
+	public void rotateYZ90Graphics() {
+		Transform3D temp = new Transform3D();
+		temp.rotX(Math.PI/2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+		
+		rotationQueue.add("YZ");	
+	}
+
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	
+	public void rotateYX90Graphics() {
+		Transform3D temp = new Transform3D();
+		temp.rotZ(-Math.PI/2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+		
+		rotationQueue.add("YX");
+	}
+	
+	
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	
+	public void rotateZX90Graphics() {
+		Transform3D temp = new Transform3D();
+		temp.rotY(-Math.PI/2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+		
+		rotationQueue.add("ZX");		
+	}
+	
+	
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	
+	public void rotateZY90Graphics() {
+		Transform3D temp = new Transform3D();
+		temp.rotX(-Math.PI/2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+		
+		rotationQueue.add("ZY");	
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	 public Appearance getAppearance() {
+		// DO NOTHING
+		return this.app;
+	 }
+
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void setAppearance(Appearance app) {
+		// DO NOTHING
+	}
+		
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void drawWireFrameMode() {
+		// DO NOTHING
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void drawFillMode() {
+		// DO NOTHING
+	}
+	
+	
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	 public void resetGraphics() {
+		// DO NOTHING 
+	 }
+	 
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	 
+	 public void enablePieceBehaviors() {
+		if (m_BoundsBehavior != null &&
+			m_BoundsBehavior.cd != null) {
+
+			m_BoundsBehavior.setEnable(true);
+			m_BoundsBehavior.cd.setEnable(true);
+			
+			m_BoundsBehavior.setSchedulingBounds(Arena3D.bounds);
+			m_BoundsBehavior.cd.setSchedulingBounds(Arena3D.bounds);
+		}	 		
+	 }
+	 
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */	 
+	 public void disablePieceBehaviors() {
+		if (m_BoundsBehavior != null &&
+			m_BoundsBehavior.cd != null) {
+
+			m_BoundsBehavior.setEnable(false);
+			m_BoundsBehavior.cd.setEnable(false);
+			
+			m_BoundsBehavior.setSchedulingBounds(Arena3D.boundsDisable);
+			m_BoundsBehavior.cd.setSchedulingBounds(Arena3D.boundsDisable);				
+		}
+	 }	 
+	 	
+
+	// PHYSICS METHODS
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public Point3d getLocation() {
+		return new Point3d(this.location);
+	}
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public void setLocation(Point3d location) {
+		this.location = new Point3d(location);
+	}
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public void setupPhysics() {
+		// Take connected BoundingBox and get new Boundingbox in absolute coordinates
+		Point3d lower = new Point3d(this.getContainerLowerLocation());
+		Point3d upper = new Point3d(this.getContainerUpperLocation());
+		this.location = new Point3d(lower);
+		this.container = new BoundingBox(lower, upper);
+
+		double x1 = lower.x;
+		double y1 = lower.y;
+		double z1 = lower.z;
+		double x2 = upper.x;
+		double y2 = upper.y;
+		double z2 = upper.z;
+
+		physics = new HashSet();
+		physics3d.Sphere p = new physics3d.Sphere(x1, y1, z1, 0.0,"s1");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y1, z1, 0.0,"s2");
+		physics.add(p);
+		p = new physics3d.Sphere(x1, y2, z1, 0.0,"s3");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y2, z1, 0.0,"s4");
+		physics.add(p);
+		p = new physics3d.Sphere(x1, y1, z2, 0.0,"s5");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y1, z2, 0.0,"s6");
+		physics.add(p);
+		p = new physics3d.Sphere(x1, y2, z2, 0.0,"s7");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y2, z2, 0.0,"s8");
+		physics.add(p);
+
+		physics3d.Cylinder c =
+			new physics3d.Cylinder(x1, y1, z1, x2, y1, z1, 0.0,"c1");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z1, x1, y2, z1, 0.0,"c2");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z1, x2, y2, z1, 0.0,"c3");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z1, x2, y2, z1, 0.0,"c4");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z1, x1, y1, z2, 0.0,"c5");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z1, x2, y1, z2, 0.0,"c6");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z1, x1, y2, z2, 0.0,"c7");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y2, z1, x2, y2, z2, 0.0,"c8");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z2, x2, y1, z2, 0.0,"c9");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z2, x1, y2, z2, 0.0,"c10");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z2, x2, y2, z2, 0.0,"c11");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z2, x2, y2, z2, 0.0,"c12");
+		physics.add(c);
+
+		physics3d.PlaneSegment ps =
+			new physics3d.PlaneSegment(x1, y1, z1, x1, y2, z1, x2, y1, z1,"ps1");
+		physics.add(ps);
+		ps = new physics3d.PlaneSegment(x2, y2, z1, x2, y1, z1, x1, y2, z1,"ps2");
+		physics.add(ps);
+
+		ps = new physics3d.PlaneSegment(x1, y1, z1, x1, y1, z2, x1, y2, z1,"ps3");
+		physics.add(ps);
+		ps = new physics3d.PlaneSegment(x1, y2, z2, x1, y2, z1, x1, y1, z2,"ps4");
+		physics.add(ps);
+
+		ps = new physics3d.PlaneSegment(x1, y2, z1, x1, y2, z2, x2, y2, z1,"ps5");
+		physics.add(ps);
+		ps = new physics3d.PlaneSegment(x2, y2, z2, x2, y2, z1, x1, y2, z2,"ps6");
+		physics.add(ps);
+
+		ps = new physics3d.PlaneSegment(x2, y2, z1, x2, y2, z2, x2, y1, z1,"ps7");
+		physics.add(ps);
+		ps = new physics3d.PlaneSegment(x2, y1, z2, x2, y1, z1, x2, y2, z2,"ps8");
+		physics.add(ps);
+
+		ps = new physics3d.PlaneSegment(x2, y1, z1, x2, y1, z2, x1, y1, z1,"ps9");
+		physics.add(ps);
+		ps = new physics3d.PlaneSegment(x1, y1, z2, x1, y1, z1, x2, y1, z2,"ps10");
+		physics.add(ps);
+
+		ps = new physics3d.PlaneSegment(x2, y1, z2, x2, y2, z2, x1, y1, z2,"ps11");
+		physics.add(ps);
+		ps = new physics3d.PlaneSegment(x1, y2, z2, x1, y1, z2, x2, y2, z2,"ps12");
+		physics.add(ps);
+
+		physics = Collections.unmodifiableSet(physics);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#update(double)
+	 */
+	public void update(double timeSlice) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public void updatePhysics(double timeSlice) {
+		//DO NOTHING
+	}
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public void resetPhysics() {
+		// TODO Auto-generated method stub
+	}
+
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#isPhysical()
+	 */
+	public boolean isPhysical() {
+		return this.isPhysical;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#setPhysical(boolean)
+	 */
+	public void setPhysical(boolean isPhysical) {
+		this.isPhysical = isPhysical;
+	}		
+
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public Set getPhysicalComponents() {
+		return Collections.unmodifiableSet(physics);
+	}
+
+	/*
+	 * @see engine.backend.PiecePhysics
+	 */
+	public BoundingBox getContainer() {
+		return new BoundingBox(this.container);
+	}
+
+	/*
+	 * @see engine.backend.GizmoPhysics
+	 */
+	public double getReflectCoeff() {
+		return COR;
+	}
+
+	/*
+	 * @see engine.backend.GizmoPhysics
+	 */
+	public void setReflectCoeff(double reflectCoeff) {
+		if (reflectCoeff < 0.0)
+			throw new IllegalArgumentException("Coefficient of Restitution cannot be negative!");
+		else
+			COR = reflectCoeff;
+	}
+
+	/*
+	 * @see engine.backend.GizmoPhysics
+	 */
+	public void triggerConnections() {
+		Iterator cIter = this.connections.iterator();
+		while(cIter.hasNext()) {
+			GizmoEvent event = (GizmoEvent) cIter.next();
+			event.getGizmo().action(event);
+		}
+	}
+	
+	/*
+	 * @see engine.backend.GizmoPhysics
+	 */
+	public void ballCollision(BallPhysics ball) {
+		triggerConnections();
+	}
+
+	/*
+	 * @see engine.backend.GizmoPhysics
+	 */
+	public void clearConnections() {
+		connections = new HashSet();
+	}
+
+	// OTHER METHODS
+	/**
+	 * Creates a command line that represents the state of this gizmo
+	 * @return command line string
+	 */
+	public String unparse() {
+		String s = "";
+		s = "Wall"
+			+ " " + toString()
+			+ " " + getContainerLowerLocation().x
+			+ " " + getContainerLowerLocation().y
+			+ " " + getContainerLowerLocation().z;
+		    
+		
+		if (this.rotationQueue.size() > 0) {
+			s += "\nRotate " + toString();
+			for (int i = 0; i < this.rotationQueue.size(); i++) {
+				s = s + " " + rotationQueue.get(i);
+			}
+		}
+				
+		return s;
+	}	
+
+	/**
+	 * Compares the specified object with this for equality.
+	 */
+	public boolean equals(Object o) {
+		if (o != null && o instanceof OuterWall3D) {
+			OuterWall3D ow = (OuterWall3D) o;
+			return ow.myID == this.myID;
+		}
+		return false;
+	}
+
+	/**
+	 * @return A valid hashcode for this.
+	 */
+	public int hashCode() {
+		if (cachedHashCode != 0) {
+		  return cachedHashCode;
+		}		
+		int result = 17;
+		result = 37 * result + "OuterWall3D".hashCode();
+		result = 37 * result + this.myID;
+
+		cachedHashCode = result;
+
+		return result;
+	}
+
+	/**
+	 * @return A string representation of this.
+	 */
+	public String toString() {
+		return new String("W" + this.myID);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#action(java.awt.event.ActionEvent)
+	 */
+	public void action(GizmoEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.event.GizmoListener#addConnection(backend.event.GizmoEvent)
+	 */
+	public void addConnection(GizmoEvent toBeTriggered) throws EventException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.event.GizmoListener#delConnection(backend.event.GizmoEvent)
+	 */
+	public void delConnection(GizmoEvent toBeTriggered) throws EventException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.event.GizmoListener#getConnections()
+	 */
+	public Set getConnections() {
+		return Collections.unmodifiableSet(this.connections);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#setupPhysicsRotations(double, double, double)
+	 */
+	public void setupPhysicsRotations(double xbar, double ybar, double zbar) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#rotate90Physics(physics3d.Cylinder)
+	 */
+	public void rotate90Physics(Cylinder axisOfRotation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+}

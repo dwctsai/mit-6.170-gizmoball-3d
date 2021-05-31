@@ -1,0 +1,46 @@
+{\rtf1\mac\ansicpg10000\cocoartf102
+{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww12340\viewh11140\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+
+\f0\fs24 \cf0 EXTERNAL CODE\
+\
+Several files of code that are used in Gizmoball3D are modified versions of code from external sources.  Due to the unique nature of our project, our GUI uses the Java3D API to display all its graphics.  Although the API is still in beta, there is a community of Java3D API developers on the Internet.  Several of these developers, like www.j3d.org, some tutorial sites, Java3D community bulletinboards, and Sun itself, have written up utility classes for the entire community to use.  The utility files are open source and are free for people to use and modify.  Since the Java3D API is still in beta (version 1.3 as of 5/2003), the utility classes make it easier for users to use the API.  Gizzmoball3D takes advantage of the open source utility classes.\
+\
+Note: The utility classes that Gizmoball3D uses are non-crucial to the functionality of the program.  Permission has been granted by the 6.170 staff to use them.  Detailed copyright information has been included at the top of any code that has been borrowed from an external source.\
+\
+DETAILED DESCRIPTION OF EXTERNAL UTILITY CLASSES\
+\
+package gui.geometries:\
+\
+ColorlessCube - a white-colored version of the API's ColorCube primitive\
+\
+package gui.picking:\
+\
+MouseRotate - handles rotation of 3D object upon mouse-drag\
+MouseTranslate - handles translation of 3D object in XY direction upon mouse-drag\
+MouseZoom - handles translation of 3D object in Z direction upon mouse-drag\
+\
+package gui.picking.behaviors:\
+\
+BoundsBehavior - Draws the rectangular bounding box of a 3D object\
+CollisionDetector - Detects graphics collisions.  Note: This is unrelated to actual physical gizmo collisions.\
+ExplosionBehavior  - Makes a 3D object shatter into pieces.\
+PickHighlightBehavior - Highlights a picked 3D object upon mouse-click\
+PickHighlightBehavior2 - Highlights a picked 3D object upon mouse-hover\
+PickRotationBehavior - allows mouse-click picking of 3D object and sets it up for MouseRotate\
+PickTranslateBehavior - allows mouse-click picking of 3D object and sets it up for MouseTranslate\
+PickZoomBehavior - allows mouse-click picking of 3D object and sets it up for PickTranslate\
+PickMouseBehavior - parent class of PickRotation/Translate/Zoom\
+PickingCallback - helper class for PickMouseBehavior\
+\
+\
+Note: All of these utility classes deal with Java3D-specific behavior only.  Any descriptions that mention "3D object" mean a 3D graphical geometry drawn by Java3D.\
+\
+VALIDATION AND TESTING OF EXTERNAL UTILITY CLASSES\
+\
+All of the external code that is used for Gizmoball3D's GUI.  Due to the nature of GUIs, it is not possible to write\
+permanent, complete test cases to test the code.  Validation of any external code is therefore done by\
+exhaustive manual testing of the GUI.  For instance, all the mouse and pick related code is validated by actually\
+going into the GUI and clicking the mouse to see if it works.  Other code, like BoundsBehavior, is tested via visual confirmation.}

@@ -1,0 +1,5 @@
+*************** BUGS ***************
+
+-- If COR > 1.0 with ball and bumper, ball's velocity gets high enough to go through 
+cubical bumper and/or crash system
+

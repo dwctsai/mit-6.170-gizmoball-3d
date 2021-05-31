@@ -1,0 +1,5 @@
+
+Cube C_MIT6170_2_5_10 2 5 10 1.0
+TriangleA T_MIT6170_2_4_10 2 4 10 1.0
+Rotate T_MIT6170_2_4_10 YX
+Rotate T_MIT6170_2_4_10 YX

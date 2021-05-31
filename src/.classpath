@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Eclipse/lib6170/junit.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/Java3D/1.5.1/lib/ext/vecmath.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/Java3D/1.5.1/lib/ext/j3dcore.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/Java3D/1.5.1/lib/ext/j3dutils.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

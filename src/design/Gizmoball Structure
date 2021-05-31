@@ -1,0 +1,55 @@
+Tasks:
+koi:
+	3D physics.
+
+dwtsai:
+	GUI and Gizmos.
+
+ragu:
+	Backend and method invocation
+
+ran:
+	Gizmos, Final documentation, Big Picture, Black box testing
+
+
+Gizmoball structure:
+
+Gizmoball
+|
++-Plugins
+| |
+| +-Modes
+| | |
+| | --default
+| | --pool
+| | --arkanoid
+| | --tetris
+| | --all
+| |
+| +-Gizmos
+|   |
+|   --ball
+|   --absorber
+|   --bouncer
+|   --leftflipper
+|   --rightflipper
+|   --fusion
+|   --teleporter
+|   --paddle
+|   --breakablebouncer
+|
+--physics3d
+--gui
+--backend
+
+
+Notes:
+	Modes are lists of Gizmo classes to use. For example, the arkanoid mode would use the Gizmos ball, paddle, breakablebouncer. This may or may not require method invocation.
+
+	Gizmos are .class files which are, well, Gizmos.
+
+	physics3d is given spheres and {spheres, planes, lines, and/or points} and detects collisions and seeing what happens to those colliders. The structure will closely match that of the provided physics package.
+
+	backend handles the progression of time slices, and updates some internal state of gizmos
+
+	gui handles UI *and* drawing of the backend state

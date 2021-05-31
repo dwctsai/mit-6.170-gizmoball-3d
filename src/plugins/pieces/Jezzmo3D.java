@@ -1,0 +1,1753 @@
+/*
+ * Created on May 8, 2003
+ *
+ * @author Ragu Vijaykumar
+ */
+package plugins.pieces;
+
+import engine.Xeon;
+import engine.backend.BallPhysics;
+import gui.Arena3D;
+import gui.Arena3DScene;
+import gui.CanvasPanel;
+import gui.picking.behaviors.BoundsBehavior;
+import gui.picking.behaviors.PickHighlightBehavior;
+import gui.picking.behaviors.PickHighlightBehavior2;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
+
+import javax.media.j3d.Appearance;
+import javax.media.j3d.BoundingBox;
+import javax.media.j3d.BoundingLeaf;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Node;
+import javax.media.j3d.PolygonAttributes;
+import javax.media.j3d.RenderingAttributes;
+import javax.media.j3d.Shape3D;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import physics3d.Cylinder;
+import backend.MobileGizmo;
+import backend.event.GizmoEvent;
+import backend.events.exceptions.EventException;
+
+import com.sun.j3d.utils.geometry.Box;
+import com.sun.j3d.utils.geometry.Primitive;
+
+/**
+ *	Jezzmo3D.java
+ *
+ *  @author Ragu Vijaykumar
+ */
+public class Jezzmo3D implements MobileGizmo {
+
+	public static final String GROW = "grow";
+	public static final String RESET = "reset";
+	public static final String DELETE = "delete";
+	private static final String[] COMMANDS =
+		{ Jezzmo3D.GROW, Jezzmo3D.RESET, Jezzmo3D.DELETE };
+
+	// GENERAL FIELDS
+	private static int ID = 0;
+	private final int myID;
+	private int cachedHashCode = 0;
+	private String name;	
+
+	// GRAPHICS FIELDS
+	private BranchGroup pieceBranch;
+	private TransformGroup pieceTG;
+	private TransformGroup pieceTGR;
+	private Transform3D pieceT3D;
+	private BranchGroup graphicsSubBranch;
+	private BranchGroup containerSubBranch;
+	private BoundingBox container;
+	private BoundingLeaf containerLeaf;
+	private BoundsBehavior m_BoundsBehavior = null;
+	private PickHighlightBehavior pickHighlight = null;
+	private PickHighlightBehavior2 pickHighlight2 = null;
+	private Appearance app;
+	private boolean isVisible;
+	private ArrayList allGeometries = new ArrayList();
+	private LinkedList rotationQueue = new LinkedList();
+
+	// PHYSICS FIELDS
+	private Point3d location;
+	private double xLength;
+	private double yLength;
+	private double zLength;
+	private double COR;
+	private boolean isPhysical = true;
+	private boolean isGrowing = false;
+	private Set connections = new HashSet();
+	private Set physics = new HashSet();
+	private Map physicsVelocities = new HashMap();
+	private double v1, v2;
+	private String growthDirection;
+
+	public static final String X_GROWTH = "x";
+	public static final String Y_GROWTH = "y";
+	public static final String Z_GROWTH = "z";
+	private int count = 0;
+
+	private Set typeV1 = new HashSet();
+	private Set typeV2 = new HashSet();
+	
+	// For reset
+	private BoundingBox origBox;
+	private double origV1;
+	private double origV2;
+
+	/**
+	 * Creates a new Jezzmo3D
+	 */
+	public Jezzmo3D(
+	    String name,	
+		Point3d lowerCornerLocation,
+		double xLength,
+		double yLength,
+		double zLength,
+		double COR,
+		Transform3D velocity,
+		Appearance app,
+		boolean isVisible,
+		String direction) {
+
+		if (lowerCornerLocation == null)
+			throw new NullPointerException(
+				"Location is invalid: " + lowerCornerLocation);
+
+		if (!direction.equals(X_GROWTH)
+			&& !direction.equals(Y_GROWTH)
+			&& !direction.equals(Z_GROWTH))
+			throw new IllegalArgumentException(
+				"Growth direction is not valid: " + direction);
+		double v = 1.0;
+		Vector3d vv = new Vector3d();
+		velocity.get(vv);
+		if (direction.equals(Z_GROWTH))
+			v = vv.z;
+		else if (direction.equals(Y_GROWTH))
+			v = vv.y;
+		else
+			v = vv.x;
+		if (0.0 == v)
+			throw new IllegalArgumentException(
+				"Jezzmo growth velocity cannot be zero");
+		if (COR < 0 || Double.isNaN(COR))
+			throw new IllegalArgumentException(
+				"Reflection Coefficient is not valid: " + COR);
+
+		// Initialize fields.
+		this.xLength = xLength;
+		this.yLength = yLength;
+		this.zLength = zLength;
+		this.COR = COR;
+		this.app = app;
+		this.v1 = -Math.abs(v);
+		this.v2 = Math.abs(v);
+		this.growthDirection = direction;
+		this.isVisible = isVisible;
+		this.myID = Jezzmo3D.ID++;
+
+		if (name == null) {
+			this.name = "J-" + this.myID;
+		}
+		else {
+			this.name = name;
+		}
+
+		recalculateVelocityMap();
+
+		// Setup the bounding box.
+		container = new BoundingBox();
+		container.setLower(-xLength / 2.0, -yLength / 2.0, -zLength / 2.0);
+		container.setUpper(xLength / 2.0, yLength / 2.0, zLength / 2.0);
+		containerLeaf = new BoundingLeaf(container);
+		containerLeaf.setCapability(Node.ALLOW_LOCAL_TO_VWORLD_READ);
+
+		// Setup graphics.
+		setupGraphics(lowerCornerLocation);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#setVelocity(javax.media.j3d.Transform3D)
+	 */
+	public void setVelocity(Transform3D velocity) {
+		double v;
+		Vector3d vv = new Vector3d();
+		velocity.get(vv);
+		if (growthDirection.equals(Z_GROWTH))
+			v = vv.z;
+		else if (growthDirection.equals(Y_GROWTH))
+			v = vv.y;
+		else
+			v = vv.x;
+		if (0.0 != v)
+		{
+			this.v1 = -Math.abs(v);
+			this.v2 = Math.abs(v);
+		}
+	}
+
+	/**
+	 * observer for the growth direction
+	 */
+	public String getGrowthDirection() {
+		return growthDirection;
+	}
+
+	/**
+	 * request to change the growth direction
+	 * @requires !isGrowing (isGrowing -> ignore request)
+	 */
+	public void setGrowthDirection(String s) {
+		if(!isGrowing && (s.equals(X_GROWTH) || s.equals(Y_GROWTH) || s.equals(Z_GROWTH)))
+		{
+				growthDirection = s;
+				recalculateVelocityMap();
+		} 
+	}
+
+	private void recalculateVelocityMap()
+	{
+		typeV1 = new HashSet();
+		typeV2 = new HashSet();
+		// IMPORTANT - These maps are based on hardcoding names to PhysicalObjects. If the names change, these maps need to change.
+		if (growthDirection.equals(X_GROWTH)) {
+			typeV1.add("p1");
+			typeV1.add("p3");
+			typeV1.add("p5");
+			typeV1.add("p7");
+			typeV1.add("c2");
+			typeV1.add("c5");
+			typeV1.add("c7");
+			typeV1.add("c10");
+			typeV1.add("ps3");
+			typeV1.add("ps4");
+
+			typeV2.add("p2");
+			typeV2.add("p4");
+			typeV2.add("p6");
+			typeV2.add("p8");
+			typeV2.add("c3");
+			typeV2.add("c6");
+			typeV2.add("c8");
+			typeV2.add("c11");
+			typeV2.add("ps7");
+			typeV2.add("ps8");
+		}
+		if (growthDirection.equals(Y_GROWTH)) {
+			typeV1.add("p1");
+			typeV1.add("p2");
+			typeV1.add("p5");
+			typeV1.add("p6");
+			typeV1.add("c1");
+			typeV1.add("c5");
+			typeV1.add("c6");
+			typeV1.add("c9");
+			typeV1.add("ps9");
+			typeV1.add("ps10");
+
+			typeV2.add("p3");
+			typeV2.add("p4");
+			typeV2.add("p7");
+			typeV2.add("p8");
+			typeV2.add("c4");
+			typeV2.add("c7");
+			typeV2.add("c8");
+			typeV2.add("c12");
+			typeV2.add("ps5");
+			typeV2.add("ps6");
+		}
+		if (growthDirection.equals(Z_GROWTH)) {
+			typeV1.add("p1");
+			typeV1.add("p2");
+			typeV1.add("p3");
+			typeV1.add("p4");
+			typeV1.add("c1");
+			typeV1.add("c2");
+			typeV1.add("c3");
+			typeV1.add("c4");
+			typeV1.add("ps1");
+			typeV1.add("ps2");
+
+			typeV2.add("p5");
+			typeV2.add("p6");
+			typeV2.add("p7");
+			typeV2.add("p8");
+			typeV2.add("c9");
+			typeV2.add("c10");
+			typeV2.add("c11");
+			typeV2.add("c12");
+			typeV2.add("ps11");
+			typeV2.add("ps12");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#getVelocity()
+	 */
+	public Transform3D getVelocity() {
+		double x = 0.0;
+		double y = 0.0;
+		double z = 0.0;
+		if (isGrowing) {
+			if (growthDirection.equals(X_GROWTH))
+				x = v2;
+			if (growthDirection.equals(Y_GROWTH))
+				y = v2;
+			if (growthDirection.equals(Z_GROWTH))
+				z = v2;
+		}
+		Vector3d v = new Vector3d(x, y, z);
+		Transform3D t3d = new Transform3D();
+		t3d.set(v);
+		return new Transform3D(t3d);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.GizmoPhysics#setReflectCoeff(double)
+	 */
+	public void setReflectCoeff(double COR) {
+		this.COR = COR;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.GizmoPhysics#triggerConnections()
+	 */
+	public void triggerConnections() {
+		Iterator cIter = this.connections.iterator();
+		while (cIter.hasNext()) {
+			GizmoEvent event = (GizmoEvent) cIter.next();
+			event.getGizmo().action(event);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.GizmoPhysics#ballCollision(engine.backend.BallPhysics)
+	 */
+	public void ballCollision(BallPhysics ball) {
+		// DO NOTHING
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.GizmoPhysics#clearConnections()
+	 */
+	public void clearConnections() {
+		connections = new HashSet();
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.GizmoPhysics#getReflectCoeff()
+	 */
+	public double getReflectCoeff() {
+		return COR;
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.event.GizmoListener#addConnection(backend.event.GizmoEvent)
+	 */
+	public void addConnection(GizmoEvent toBeTriggered) throws EventException {
+		if (toBeTriggered == null)
+			throw new NullPointerException("Cannot pass in a null trigger!");
+
+		boolean added = this.connections.add(toBeTriggered);
+		if (!added)
+			throw new EventException(
+				"There is already a connection to this gizmo: "
+					+ toBeTriggered.getGizmo());
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.event.GizmoListener#delConnection(backend.event.GizmoEvent)
+	 */
+	public void delConnection(GizmoEvent toBeTriggered) throws EventException {
+		if (toBeTriggered == null)
+			throw new NullPointerException("Cannot pass in a null trigger!");
+
+		boolean deleted = this.connections.remove(toBeTriggered);
+		if (!deleted)
+			throw new EventException(
+				"There is no connection to this gizmo: "
+					+ toBeTriggered.getGizmo());
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.GizmoPhysics#getConnections()
+	 */
+	public Set getConnections() {
+		return Collections.unmodifiableSet(connections);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#getComponentVelocities()
+	 */
+	public Map getComponentVelocities() {
+		return Collections.unmodifiableMap(physicsVelocities);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#getNextBoundingBox(double)
+	 */
+	public BoundingBox getNextContainer(double timeSlice) {
+		//		System.out.println("Current container " + container);
+		if (0.0 > timeSlice)
+			throw new IllegalArgumentException(
+				"Time passed to getNextContainer must be nonnegative; recieved "
+					+ timeSlice);
+		if (0.0 == timeSlice || !isGrowing)
+			return new BoundingBox(container);
+		Point3d lower = new Point3d();
+		Point3d upper = new Point3d();
+		container.getLower(lower);
+		container.getUpper(upper);
+		double nx1 = lower.x;
+		double ny1 = lower.y;
+		double nz1 = lower.z;
+		double nx2 = upper.x;
+		double ny2 = upper.y;
+		double nz2 = upper.z;
+		if (growthDirection.equals(X_GROWTH)) {
+			nx1 += v1 * timeSlice;
+			nx2 += v2 * timeSlice;
+		}
+		if (growthDirection.equals(Y_GROWTH)) {
+			ny1 += v1 * timeSlice;
+			ny2 += v2 * timeSlice;
+		}
+		if (growthDirection.equals(Z_GROWTH)) {
+			nz1 += v1 * timeSlice;
+			nz2 += v2 * timeSlice;
+		}
+
+		BoundingBox newBB =
+			new BoundingBox(
+				new Point3d(nx1, ny1, nz1),
+				new Point3d(nx2, ny2, nz2));
+		//		System.out.println("Next container " + newBB);
+		return newBB;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#setLocation(javax.vecmath.Point3d)
+	 */
+	public void setLocation(Point3d location) {
+		this.location = new Point3d(location);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#updatePhysics(double)
+	 */
+	public void updatePhysics(double timeSlice) {
+		if (!isGrowing)
+			return;
+
+		// System.out.println("container in physics " + container);
+
+		Point3d lower = new Point3d();
+		Point3d upper = new Point3d();
+
+		this.container.getLower(lower);
+		this.container.getUpper(upper);
+
+		double x1 = lower.x;
+		double y1 = lower.y;
+		double z1 = lower.z;
+		double x2 = upper.x;
+		double y2 = upper.y;
+		double z2 = upper.z;
+
+		// IMPORTANT - Velocity maps are based on hardcoding names to PhysicalObjects. If the names change, those maps need to change.
+		Set newPhysics = new HashSet();
+		physics3d.Sphere p = new physics3d.Sphere(x1, y1, z1, 0.0, "p1");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x2, y1, z1, 0.0, "p2");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x1, y2, z1, 0.0, "p3");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x2, y2, z1, 0.0, "p4");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x1, y1, z2, 0.0, "p5");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x2, y1, z2, 0.0, "p6");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x1, y2, z2, 0.0, "p7");
+		newPhysics.add(p);
+		p = new physics3d.Sphere(x2, y2, z2, 0.0, "p8");
+		newPhysics.add(p);
+
+		physics3d.Cylinder c =
+			new physics3d.Cylinder(x1, y1, z1, x2, y1, z1, 0.0, "c1");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z1, x1, y2, z1, 0.0, "c2");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z1, x2, y2, z1, 0.0, "c3");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z1, x2, y2, z1, 0.0, "c4");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z1, x1, y1, z2, 0.0, "c5");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z1, x2, y1, z2, 0.0, "c6");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z1, x1, y2, z2, 0.0, "c7");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x2, y2, z1, x2, y2, z2, 0.0, "c8");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z2, x2, y1, z2, 0.0, "c9");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z2, x1, y2, z2, 0.0, "c10");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z2, x2, y2, z2, 0.0, "c11");
+		newPhysics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z2, x2, y2, z2, 0.0, "c12");
+		newPhysics.add(c);
+
+		physics3d.PlaneSegment ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y1,
+				z1,
+				x1,
+				y2,
+				z1,
+				x2,
+				y1,
+				z1,
+				"ps1");
+		newPhysics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y2,
+				z1,
+				x2,
+				y1,
+				z1,
+				x1,
+				y2,
+				z1,
+				"ps2");
+		newPhysics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y1,
+				z1,
+				x1,
+				y1,
+				z2,
+				x1,
+				y2,
+				z1,
+				"ps3");
+		newPhysics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y2,
+				z2,
+				x1,
+				y2,
+				z1,
+				x1,
+				y1,
+				z2,
+				"ps4");
+		newPhysics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y2,
+				z1,
+				x1,
+				y2,
+				z2,
+				x2,
+				y2,
+				z1,
+				"ps5");
+		newPhysics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y2,
+				z2,
+				x2,
+				y2,
+				z1,
+				x1,
+				y2,
+				z2,
+				"ps6");
+		newPhysics.add(ps);
+
+		// System.out.println("ps6 " + ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y2,
+				z1,
+				x2,
+				y2,
+				z2,
+				x2,
+				y1,
+				z1,
+				"ps7");
+		newPhysics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y1,
+				z2,
+				x2,
+				y1,
+				z1,
+				x2,
+				y2,
+				z2,
+				"ps8");
+		newPhysics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y1,
+				z1,
+				x2,
+				y1,
+				z2,
+				x1,
+				y1,
+				z1,
+				"ps9");
+		newPhysics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y1,
+				z2,
+				x1,
+				y1,
+				z1,
+				x2,
+				y1,
+				z2,
+				"ps10");
+		newPhysics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y1,
+				z2,
+				x2,
+				y2,
+				z2,
+				x1,
+				y1,
+				z2,
+				"ps11");
+		newPhysics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y2,
+				z2,
+				x1,
+				y1,
+				z2,
+				x2,
+				y2,
+				z2,
+				"ps12");
+		newPhysics.add(ps);
+
+		physics = Collections.unmodifiableSet(newPhysics);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#update(double)
+	 */
+	public void update(double timeSlice) {
+		updateGraphics();
+//		if (!isGrowing) {
+//			System.out.println(
+//				"Jezzmo: " + this +" Number of components: " + physics.size());
+//			Iterator physicsIter = physics.iterator();
+//			while (physicsIter.hasNext()) {
+//				System.out.println(physicsIter.next());
+//			}
+//		}
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#action(backend.event.Event)
+	 */
+	public void action(GizmoEvent event) {
+		
+//		System.out.println(event.getInfo());
+
+		if (event.getCommand().equals(Jezzmo3D.DEFAULT_ACTION)) {
+
+			if (!isGrowing) {
+				// Start growing
+				isGrowing = true;
+				if (v1 == 0 && v2 == 0)
+					isGrowing = false;
+
+			} else {
+				// Delete the Jezzmo
+				Xeon.removePiece(this);
+				this.removePiece();
+			}
+
+		} else if (event.getCommand().equals(Jezzmo3D.GROW)) {
+			isGrowing = true;
+			if (v1 == 0 && v2 == 0)
+				isGrowing = false;
+		} else if (event.getCommand().equals(Jezzmo3D.RESET)) {
+			
+			this.v1 = this.origV1;
+			this.v2 = this.origV2;
+			this.container = this.origBox;
+			this.isGrowing = true;
+			this.updatePhysics(0);
+			this.updateGraphics();
+			this.isGrowing = false;
+			
+		} else if (event.getCommand().equals(Jezzmo3D.DELETE)) {
+			boolean status = Xeon.removePiece(this);
+			this.removePiece();
+			System.out.println("Removed self: " + status);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#resetPhysics()
+	 */
+	public void resetPhysics() {
+		// DOES NOTHING
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#setupPhysics()
+	 */
+	public void setupPhysics() {
+
+		// Take connected BoundingBox and get new Boundingbox in absolute coordinates
+		// System.err.println("Setup Physics called!");
+
+		Point3d lower = new Point3d(this.getContainerLowerLocation());
+		Point3d upper = new Point3d(this.getContainerUpperLocation());
+		this.location = new Point3d(lower);
+		 
+		this.container = new BoundingBox(lower, upper);
+		
+		this.origBox = new BoundingBox(this.container);
+		this.origV1 = this.v1;
+		this.origV2 = this.v2;
+
+		double x1 = lower.x;
+		double y1 = lower.y;
+		double z1 = lower.z;
+		double x2 = upper.x;
+		double y2 = upper.y;
+		double z2 = upper.z;
+
+		// IMPORTANT - Velocity maps are based on hardcoding names to PhysicalObjects. If the names change, those maps need to change.
+		physics = new HashSet();
+		physics3d.Sphere p = new physics3d.Sphere(x1, y1, z1, 0.0, "p1");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y1, z1, 0.0, "p2");
+		physics.add(p);
+		p = new physics3d.Sphere(x1, y2, z1, 0.0, "p3");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y2, z1, 0.0, "p4");
+		physics.add(p);
+		p = new physics3d.Sphere(x1, y1, z2, 0.0, "p5");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y1, z2, 0.0, "p6");
+		physics.add(p);
+		p = new physics3d.Sphere(x1, y2, z2, 0.0, "p7");
+		physics.add(p);
+		p = new physics3d.Sphere(x2, y2, z2, 0.0, "p8");
+		physics.add(p);
+
+		physics3d.Cylinder c =
+			new physics3d.Cylinder(x1, y1, z1, x2, y1, z1, 0.0, "c1");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z1, x1, y2, z1, 0.0, "c2");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z1, x2, y2, z1, 0.0, "c3");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z1, x2, y2, z1, 0.0, "c4");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z1, x1, y1, z2, 0.0, "c5");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z1, x2, y1, z2, 0.0, "c6");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z1, x1, y2, z2, 0.0, "c7");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y2, z1, x2, y2, z2, 0.0, "c8");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z2, x2, y1, z2, 0.0, "c9");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y1, z2, x1, y2, z2, 0.0, "c10");
+		physics.add(c);
+		c = new physics3d.Cylinder(x2, y1, z2, x2, y2, z2, 0.0, "c11");
+		physics.add(c);
+		c = new physics3d.Cylinder(x1, y2, z2, x2, y2, z2, 0.0, "c12");
+		physics.add(c);
+
+		physics3d.PlaneSegment ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y1,
+				z1,
+				x1,
+				y2,
+				z1,
+				x2,
+				y1,
+				z1,
+				"ps1");
+		physics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y2,
+				z1,
+				x2,
+				y1,
+				z1,
+				x1,
+				y2,
+				z1,
+				"ps2");
+		physics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y1,
+				z1,
+				x1,
+				y1,
+				z2,
+				x1,
+				y2,
+				z1,
+				"ps3");
+		physics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y2,
+				z2,
+				x1,
+				y2,
+				z1,
+				x1,
+				y1,
+				z2,
+				"ps4");
+		physics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y2,
+				z1,
+				x1,
+				y2,
+				z2,
+				x2,
+				y2,
+				z1,
+				"ps5");
+		physics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y2,
+				z2,
+				x2,
+				y2,
+				z1,
+				x1,
+				y2,
+				z2,
+				"ps6");
+		physics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y2,
+				z1,
+				x2,
+				y2,
+				z2,
+				x2,
+				y1,
+				z1,
+				"ps7");
+		physics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y1,
+				z2,
+				x2,
+				y1,
+				z1,
+				x2,
+				y2,
+				z2,
+				"ps8");
+		physics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y1,
+				z1,
+				x2,
+				y1,
+				z2,
+				x1,
+				y1,
+				z1,
+				"ps9");
+		physics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y1,
+				z2,
+				x1,
+				y1,
+				z1,
+				x2,
+				y1,
+				z2,
+				"ps10");
+		physics.add(ps);
+
+		ps =
+			new physics3d.PlaneSegment(
+				x2,
+				y1,
+				z2,
+				x2,
+				y2,
+				z2,
+				x1,
+				y1,
+				z2,
+				"ps11");
+		physics.add(ps);
+		ps =
+			new physics3d.PlaneSegment(
+				x1,
+				y2,
+				z2,
+				x1,
+				y1,
+				z2,
+				x2,
+				y2,
+				z2,
+				"ps12");
+		physics.add(ps);
+
+		physics = Collections.unmodifiableSet(physics);
+
+		this.updateVelocityMapping();
+
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#setPhysical(boolean)
+	 */
+	public void setPhysical(boolean isPhysical) {
+		this.isPhysical = isPhysical;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#isPhysical()
+	 */
+	public boolean isPhysical() {
+		return isPhysical;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#getContainer()
+	 */
+	public BoundingBox getContainer() {
+		return new BoundingBox(container);
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#getLocation()
+	 */
+	public Point3d getLocation() {
+		return this.location;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#getPhysicalComponents()
+	 */
+	public Set getPhysicalComponents() {
+		return Collections.unmodifiableSet(physics);
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#setupGraphics(javax.vecmath.Point3d)
+	 */
+	public void setupGraphics(Point3d lowerCornerLocation) {
+		// Initialize the transforms for the graphic.
+		pieceTG = new TransformGroup();
+		pieceTGR = new TransformGroup();
+		pieceTG.addChild(pieceTGR);
+		if (isVisible) {
+			pieceTG.setCapability(TransformGroup.ENABLE_PICK_REPORTING);
+			pieceTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+			pieceTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+			pieceTG.setPickable(true);
+			pieceTG.setCollidable(true);
+
+			pieceTGR.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+			pieceTGR.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+
+		} else {
+			pieceTG.setPickable(false);
+		}
+
+		pieceT3D = new Transform3D();
+
+		// Setup the appearance of this piece.
+		if (!isVisible) {
+			RenderingAttributes ra = new RenderingAttributes();
+			ra.setVisible(false);
+			app.setRenderingAttributes(ra);
+		}
+
+		// Create the primitive shapes that make up this piece.
+		Box gBox =
+			new Box(
+				((float) xLength) / 2.0f,
+				((float) yLength) / 2.0f,
+				((float) zLength) / 2.0f,
+				Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS,
+				app,
+				32);
+		gBox.setBoundsAutoCompute(false);
+		gBox.setPickable(true);
+		gBox.setCollidable(false);
+		gBox.setCapability(Primitive.ENABLE_APPEARANCE_MODIFY);
+
+		allGeometries.add(gBox);
+
+		// For highlighting behaviors.
+		Shape3D s3d = gBox.getShape(Box.BACK);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		s3d = gBox.getShape(Box.BOTTOM);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		s3d = gBox.getShape(Box.FRONT);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		s3d = gBox.getShape(Box.LEFT);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		s3d = gBox.getShape(Box.RIGHT);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+		s3d = gBox.getShape(Box.TOP);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		s3d.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+
+		// Arrange the primitive shapes to create the geometry of the piece.
+		graphicsSubBranch = new BranchGroup();
+
+		Transform3D translate = new Transform3D();
+
+		// --add the box shape
+		Vector3d transVec = new Vector3d(0.0, 0.0, 0.0);
+		translate.set(transVec);
+		TransformGroup tempTG1 = new TransformGroup(translate);
+		tempTG1.addChild(gBox);
+		graphicsSubBranch.addChild(tempTG1);
+
+		// Move this piece to its starting location.
+		translate = new Transform3D();
+		transVec =
+			new Vector3d(
+				lowerCornerLocation.x + xLength / 2.0,
+				lowerCornerLocation.y + yLength / 2.0,
+				lowerCornerLocation.z + zLength / 2.0);
+		translate.set(transVec);
+		pieceT3D.set(transVec);
+		pieceTG.setTransform(pieceT3D);
+
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#updateGraphics()
+	 */
+	public void updateGraphics() {
+		if (!isGrowing)
+			return;
+
+		Point3d lower = new Point3d();
+		Point3d upper = new Point3d();
+		container.getLower(lower);
+		container.getUpper(upper);
+
+		double dx = upper.x - lower.x;
+		double dy = upper.y - lower.y;
+		double dz = upper.z - lower.z;
+		double xbar = (upper.x + lower.x) / 2.0;
+		double ybar = (upper.y + lower.y) / 2.0;
+		double zbar = (upper.z + lower.z) / 2.0;
+
+		Vector3d vec = new Vector3d();
+		Transform3D temp = new Transform3D();
+		pieceTG.getTransform(temp);
+		temp.get(vec);
+		Transform3D temp2 = new Transform3D();
+		temp2.set(vec);
+		temp2.sub(new Transform3D());
+		temp.sub(temp2);
+		temp2.set(new Vector3d(xbar, ybar, zbar));
+		temp2.sub(new Transform3D());
+		temp.add(temp2);
+		temp.setScale(new Vector3d(dx, dy, dz));
+		pieceTG.setTransform(temp);
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void moveGraphics(Point3d p) {
+		Point3d lower = getContainerLowerLocation();
+		Point3d upper = getContainerUpperLocation();
+		double xLength = upper.x - lower.x;
+		double yLength = upper.y - lower.y;
+		double zLength = upper.z - lower.z;
+
+		p.x += xLength / 2.0;
+		p.y += yLength / 2.0;
+		p.z += zLength / 2.0;
+
+		Transform3D translate = new Transform3D();
+		pieceTG.getTransform(translate);
+		Vector3d transVec = new Vector3d(p);
+		translate.setTranslation(transVec);
+		pieceTG.setTransform(translate);
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#addPiece()
+	 */
+	public void addPiece() {
+		// Add this to the list of gizmos.
+		Arena3DScene.allGizmos.add(this);
+		Arena3DScene.TGtoPiece.put(pieceTG, this);
+
+		// Create the main pieceBranch.
+		pieceBranch = new BranchGroup();
+		pieceBranch.setCapability(BranchGroup.ALLOW_DETACH);
+
+		// Transform pieceTG to the starting position.
+		pieceTG.setTransform(pieceT3D);
+		pieceBranch.addChild(pieceTG);
+
+		// Complete the graphics sub-branch.
+		if (isVisible) {
+			pickHighlight =
+				new PickHighlightBehavior(
+					graphicsSubBranch,
+					CanvasPanel.canvas3D,
+					Arena3D.boundsDisable);
+			pickHighlight.setEnable(false);
+			//			graphicsSubBranch.addChild(pickHighlight);
+		}
+		graphicsSubBranch.compile();
+		pieceTGR.addChild(graphicsSubBranch);
+
+		// Create the container sub-branch. 
+		containerSubBranch = new BranchGroup();
+		if (isVisible) {
+			m_BoundsBehavior = new BoundsBehavior(container);
+			m_BoundsBehavior.setSchedulingBounds(Arena3D.boundsDisable);
+			m_BoundsBehavior.addBehaviorToParentGroup(containerSubBranch);
+			m_BoundsBehavior.setEnable(false);
+			pickHighlight2 =
+				new PickHighlightBehavior2(
+					containerSubBranch,
+					CanvasPanel.canvas3D,
+					Arena3D.boundsDisable,
+					false);
+			pickHighlight2.setEnable(false);
+			containerSubBranch.addChild(pickHighlight2);
+		}
+		containerSubBranch.addChild(containerLeaf);
+		containerSubBranch.compile();
+		pieceTG.addChild(containerSubBranch);
+
+		// Add pieceBranch branch to Arena3DScene's piecesBranch.	
+		pieceBranch.compile();
+		Arena3DScene.piecesBranch.addChild(pieceBranch);
+
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#removePiece()
+	 */
+	public void removePiece() {
+		// Remove this from the list of gizmos.
+		Arena3DScene.allGizmos.remove(this);
+		Arena3DScene.TGtoPiece.remove(pieceTG);
+
+		// Remove this piece's parent BranchGroup from the scene.
+		pieceBranch.detach();
+		Arena3DScene.piecesBranch.removeChild(pieceBranch);
+
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#getContainerLowerLocation()
+	 */
+	public Point3d getContainerLowerLocation() {
+		Point3d lp = new Point3d();
+		container.getLower(lp);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(lp);
+
+		Point3d up = new Point3d();
+		container.getUpper(up);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(up);
+
+		lp.x = (lp.x < up.x) ? lp.x : up.x;
+		lp.y = (lp.y < up.y) ? lp.y : up.y;
+		lp.z = (lp.z < up.z) ? lp.z : up.z;
+
+		return lp;
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#getContainerUpperLocation()
+	 */
+	public Point3d getContainerUpperLocation() {
+		Point3d lp = new Point3d();
+		container.getLower(lp);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(lp);
+
+		Point3d up = new Point3d();
+		container.getUpper(up);
+		containerLeaf.getLocalToVworld(pieceT3D);
+		pieceT3D.transform(up);
+
+		up.x = (lp.x > up.x) ? lp.x : up.x;
+		up.y = (lp.y > up.y) ? lp.y : up.y;
+		up.z = (lp.z > up.z) ? lp.z : up.z;
+
+		return up;
+	}
+
+	/*
+	 *  @see gui.backend.PieceGraphics
+	 */
+	public BoundingBox getContainerAbsoluteCoord() {
+		BoundingBox result = new BoundingBox();
+		result.setLower(getContainerLowerLocation());
+		result.setUpper(getContainerUpperLocation());
+
+		return result;
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void rotateXY90Graphics() {
+/*
+ 		Transform3D temp = new Transform3D();
+		temp.rotZ(Math.PI / 2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+
+		rotationQueue.add("XY");
+*/
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void rotateXZ90Graphics() {
+/*
+ 		Transform3D temp = new Transform3D();
+		temp.rotY(Math.PI / 2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+
+		rotationQueue.add("XZ");
+*/
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void rotateYZ90Graphics() {
+/*
+		Transform3D temp = new Transform3D();
+		temp.rotX(Math.PI / 2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+
+		rotationQueue.add("YZ");
+*/
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void rotateYX90Graphics() {
+/*
+ 		Transform3D temp = new Transform3D();
+		temp.rotZ(-Math.PI / 2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+
+		rotationQueue.add("YX");
+*/
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void rotateZX90Graphics() {
+/*
+		Transform3D temp = new Transform3D();
+		temp.rotY(-Math.PI / 2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+
+		rotationQueue.add("ZX");
+*/
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void rotateZY90Graphics() {
+/*
+		Transform3D temp = new Transform3D();
+		temp.rotX(-Math.PI / 2.0);
+		Vector3d currentTransVec = new Vector3d();
+		pieceT3D.get(currentTransVec);
+		pieceT3D.setTranslation(new Vector3d());
+		pieceT3D.mul(temp);
+		pieceT3D.setTranslation(currentTransVec);
+		pieceTG.setTransform(pieceT3D);
+
+		rotationQueue.add("ZY");
+*/
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public Appearance getAppearance() {
+		return this.app;
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void setAppearance(Appearance app) {
+		this.app = app;
+
+		for (int i = 0; i < allGeometries.size(); i++) {
+			Object currentGeom = allGeometries.get(i);
+			if (currentGeom instanceof Primitive) {
+				((Primitive) allGeometries.get(i)).setAppearance(app);
+			} else if (currentGeom instanceof Shape3D) {
+				((Shape3D) allGeometries.get(i)).setAppearance(app);
+			}
+		}
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void drawWireFrameMode() {
+		PolygonAttributes pa = new PolygonAttributes();
+		pa.setPolygonMode(PolygonAttributes.POLYGON_LINE);
+		app.setPolygonAttributes(pa);
+
+		for (int i = 0; i < allGeometries.size(); i++) {
+			Object currentGeom = allGeometries.get(i);
+			if (currentGeom instanceof Primitive) {
+				((Primitive) allGeometries.get(i)).setAppearance(app);
+			} else if (currentGeom instanceof Shape3D) {
+				((Shape3D) allGeometries.get(i)).setAppearance(app);
+			}
+		}
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void drawFillMode() {
+		PolygonAttributes pa = new PolygonAttributes();
+		pa.setPolygonMode(PolygonAttributes.POLYGON_FILL);
+		app.setPolygonAttributes(pa);
+
+		for (int i = 0; i < allGeometries.size(); i++) {
+			Object currentGeom = allGeometries.get(i);
+			if (currentGeom instanceof Primitive) {
+				((Primitive) allGeometries.get(i)).setAppearance(app);
+			} else if (currentGeom instanceof Shape3D) {
+				((Shape3D) allGeometries.get(i)).setAppearance(app);
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see gui.backend.PieceGraphics#resetGraphics()
+	 */
+	public void resetGraphics() {
+		// DOES NOTHING
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void enablePieceBehaviors() {
+		if (pickHighlight != null
+			&& pickHighlight2 != null
+			&& m_BoundsBehavior != null
+			&& m_BoundsBehavior.cd != null) {
+
+			pickHighlight.setEnable(true);
+			pickHighlight2.setEnable(true);
+			m_BoundsBehavior.setEnable(true);
+			m_BoundsBehavior.cd.setEnable(true);
+
+			pickHighlight.setSchedulingBounds(Arena3D.bounds);
+			pickHighlight2.setSchedulingBounds(Arena3D.bounds);
+			m_BoundsBehavior.setSchedulingBounds(Arena3D.bounds);
+			m_BoundsBehavior.cd.setSchedulingBounds(Arena3D.bounds);
+
+		}
+	}
+
+	/*
+	 * @see gui.backend.PieceGraphics
+	 */
+	public void disablePieceBehaviors() {
+		if (pickHighlight != null
+			&& pickHighlight2 != null
+			&& m_BoundsBehavior != null
+			&& m_BoundsBehavior.cd != null) {
+
+			pickHighlight.setEnable(false);
+			pickHighlight2.setEnable(false);
+			m_BoundsBehavior.setEnable(false);
+			m_BoundsBehavior.cd.setEnable(false);
+
+			pickHighlight.setSchedulingBounds(Arena3D.boundsDisable);
+			pickHighlight2.setSchedulingBounds(Arena3D.boundsDisable);
+			m_BoundsBehavior.setSchedulingBounds(Arena3D.boundsDisable);
+			m_BoundsBehavior.cd.setSchedulingBounds(Arena3D.boundsDisable);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.stream.Parsable#unparse()
+	 */
+	public String unparse() {
+		String s = "";
+		s =
+			"Jezzmo"
+				+ " "
+				+ toString()
+				+ " "
+				+ getContainerLowerLocation().x
+				+ " "
+				+ getContainerLowerLocation().y
+				+ " "
+				+ getContainerLowerLocation().z
+				+ " "
+				+ v2
+				+ " "
+				+ getReflectCoeff()				
+				+ " "
+				+ growthDirection;
+
+		if (this.rotationQueue.size() > 0) {
+			s += "\nRotate " + toString();
+			for (int i = 0; i < this.rotationQueue.size(); i++) {
+				s = s + " " + rotationQueue.get(i);
+			}
+		}
+
+		s += "\n";
+
+		return s;
+	}
+
+	/**
+	 * Compares the specified object with this for equality.
+	 */
+	public boolean equals(Object o) {
+		if (o != null && o instanceof Jezzmo3D) {
+			Jezzmo3D j = (Jezzmo3D) o;
+			return j.name.equals(this.name);
+		}
+		return false;
+	}
+
+	/**
+	 * @return A valid hashcode for this.
+	 */
+	public int hashCode() {
+		if (cachedHashCode != 0) {
+			return cachedHashCode;
+		}
+		int result = 17;
+		result = 37 * result + "Jezzmo3D".hashCode();
+		result = 37 * result + this.name.hashCode();
+
+		cachedHashCode = result;
+
+		return result;
+	}
+
+	/**
+	 * @return A string representation of this.
+	 */
+	public String toString() {
+		return this.name;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#setupPhysicsRotations(double, double, double)
+	 */
+	public void setupPhysicsRotations(double xbar, double ybar, double zbar) {
+		// DOES NOTHING
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.PiecePhysics#rotate90Physics(physics3d.Cylinder)
+	 */
+	public void rotate90Physics(Cylinder axisOfRotation) {
+		// DOES NOTHING
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#collision(javax.media.j3d.BoundingBox)
+	 */
+	public BoundingBox collision(BoundingBox problemBox) {
+		if (!isGrowing)
+			return new BoundingBox(container);
+		Point3d lower = new Point3d();
+		Point3d upper = new Point3d();
+		container.getLower(lower);
+		container.getUpper(upper);
+		double xbar = (lower.x + upper.x) / 2.0;
+		double ybar = (lower.y + upper.y) / 2.0;
+		double zbar = (lower.z + upper.z) / 2.0;
+		Vector3d center = new Vector3d(xbar, ybar, zbar);
+		Vector3d upperCurrentBox = new Vector3d(upper);
+		Point3d lowerAllowed = new Point3d();
+		Point3d upperAllowed = new Point3d();
+		problemBox.getLower(lowerAllowed);
+		problemBox.getUpper(upperAllowed);
+		Vector3d lowerAllowedBox = new Vector3d(lowerAllowed);
+		Vector3d upperAllowedBox = new Vector3d(upperAllowed);
+		boolean onUpperSide = true;
+		if (growthDirection.equals(X_GROWTH))
+			onUpperSide = upperAllowed.x < xbar;
+		if (growthDirection.equals(Y_GROWTH))
+			onUpperSide = upperAllowed.y < ybar;
+		if (growthDirection.equals(Z_GROWTH))
+			onUpperSide = upperAllowed.z < zbar;
+		double newX1 = lower.x;
+		double newY1 = lower.y;
+		double newZ1 = lower.z;
+		double newX2 = upper.x;
+		double newY2 = upper.y;
+		double newZ2 = upper.z;
+		double t = 0;
+		//		System.out.println("ProblemBox " + problemBox);
+		if (onUpperSide) {
+			if (growthDirection.equals(X_GROWTH)) {
+				t = (upperAllowed.x - lower.x) / v1;
+				newX1 = upperAllowed.x;
+				newX2 += v2 * t;
+			}
+			if (growthDirection.equals(Y_GROWTH)) {
+				t = (upperAllowed.y - lower.y) / v1;
+				newY1 = upperAllowed.y;
+				newY2 += v2 * t;
+			}
+			if (growthDirection.equals(Z_GROWTH)) {
+				t = (upperAllowed.z - lower.z) / v1;
+				newZ1 = upperAllowed.z;
+				newZ2 += v2 * t;
+			}
+		} else {
+			if (growthDirection.equals(X_GROWTH)) {
+				t = (lowerAllowed.x - upper.x) / v2;
+				newX1 += v1 * t;
+				newX2 = lowerAllowed.x;
+			}
+			if (growthDirection.equals(Y_GROWTH)) {
+				t = (lowerAllowed.y - upper.y) / v2;
+				newY1 += v1 * t;
+				newY2 = lowerAllowed.y;
+			}
+			if (growthDirection.equals(Z_GROWTH)) {
+				t = (lowerAllowed.z - upper.z) / v2;
+				newZ1 += v1 * t;
+				newZ2 = lowerAllowed.z;
+			}
+		}
+		BoundingBox newContainer =
+			new BoundingBox(
+				new Point3d(newX1, newY1, newZ1),
+				new Point3d(newX2, newY2, newZ2));
+		//		System.out.println("Collided container " + newContainer);
+		if (onUpperSide) {
+			v1 = 0.0;
+			//			System.out.println("Jezzmo stopped growing in dir 1");
+		} else {
+			v2 = 0.0;
+			//			System.out.println("Jezzmo stopped growing in dir 2");
+		}
+		updateVelocityMapping();
+		if (0.0 == v1 && 0.0 == v2) {
+			isGrowing = false;
+			//			System.out.println("Jezzmo stopped growing");
+		}
+		return newContainer;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#setContainer(javax.media.j3d.BoundingBox)
+	 */
+	public void setContainer(BoundingBox container) {
+		//		System.out.println("Set container to " + container);
+		this.container = container;
+	}
+
+	/* (non-Javadoc)
+	 * @see engine.backend.MobileGizmoPhysics#isMoving()
+	 */
+	public boolean isMoving() {
+		return this.isGrowing;
+	}
+
+	public void updateVelocityMapping() {
+		physicsVelocities = new HashMap();
+		double x1 = 0.0;
+		double y1 = 0.0;
+		double z1 = 0.0;
+		double x2 = 0.0;
+		double y2 = 0.0;
+		double z2 = 0.0;
+		if (growthDirection.equals(X_GROWTH)) {
+			x1 = v1;
+			x2 = v2;
+		}
+		if (growthDirection.equals(Y_GROWTH)) {
+			y1 = v1;
+			y2 = v2;
+		}
+		if (growthDirection.equals(Z_GROWTH)) {
+			z1 = v1;
+			z2 = v2;
+		}
+		Vector3d v0 = new Vector3d(0.0, 0.0, 0.0);
+		Vector3d v1 = new Vector3d(x1, y1, z1);
+		Vector3d v2 = new Vector3d(x2, y2, z2);
+		Transform3D t0 = new Transform3D();
+		t0.set(v0);
+		Transform3D t1 = new Transform3D();
+		t1.set(v1);
+		Transform3D t2 = new Transform3D();
+		t2.set(v2);
+		String nextName = "";
+		Object nO;
+		for (Iterator i = getPhysicalComponents().iterator(); i.hasNext();) {
+			nO = i.next();
+			if (nO instanceof physics3d.Sphere)
+				nextName = ((physics3d.Sphere) nO).getName();
+			if (nO instanceof physics3d.Cylinder)
+				nextName = ((physics3d.Cylinder) nO).getName();
+			if (nO instanceof physics3d.PlaneSegment)
+				nextName = ((physics3d.PlaneSegment) nO).getName();
+			if (typeV1.contains(nextName))
+				physicsVelocities.put(nextName, t1);
+			else if (typeV2.contains(nextName))
+				physicsVelocities.put(nextName, t2);
+			else
+				physicsVelocities.put(nextName, t0);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see backend.event.GizmoListener#getActions()
+	 */
+	public Collection getActions() {
+
+		LinkedList l = new LinkedList();
+
+		for (int i = 0; i < Jezzmo3D.COMMANDS.length; i++) {
+			l.add(Jezzmo3D.COMMANDS[i]);
+		}
+
+		return Collections.unmodifiableCollection(l);
+	}
+}

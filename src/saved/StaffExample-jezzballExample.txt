@@ -1,0 +1,14 @@
+Gravity 0.0
+Friction 0.0 0.0
+
+Ball B1 1.0 1.0 -5.0 -5.0
+Ball B2 19.0 19.0 2.0 8.0
+Ball B3 1.0 19.0 8.0 2.0
+
+Jezzmo J1 7 10 10.0 vertical
+Jezzmo J2 14 10 10.0 horizontal
+Connect J1 J1 delete
+Connect J2 J2 delete
+
+MouseConnect left-click press J1 grow
+MouseConnect right-click press J2 grow

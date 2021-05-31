@@ -1,0 +1,12 @@
+Absorber abs 0 19 20 20
+KeyConnect key 127 DOWN abs
+
+Triangle tri 19 0
+Square squ 19 0
+Circle cir 19 0
+
+Rotate fubar
+
+Square squ2 15 15
+
+KeyConnect key 32 DOWN missing

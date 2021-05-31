@@ -1,0 +1,103 @@
+Gravity 75.0
+Friction 0.0 0.0
+RightFlipper g0 10 3
+
+Triangle g1 18 13
+Rotate g1
+
+LeftFlipper g2 13 10
+
+RightFlipper g3 0 18
+
+Absorber g4 2 18 8 19
+
+Square g5 16 10
+
+Square g6 3 10
+
+LeftFlipper g7 18 18
+
+Square g8 19 11
+
+Triangle g9 17 12
+Rotate g9
+
+LeftFlipper g10 8 18
+
+Triangle g11 18 0
+
+Triangle g12 16 11
+Rotate g12
+
+Square g13 18 10
+
+LeftFlipper g14 18 3
+
+Square g15 19 12
+
+Square g16 3 7
+
+Triangle g17 15 10
+Rotate g17
+
+Absorber g18 7 10 13 11
+
+Square g19 18 11
+
+Square g20 3 6
+
+Square g21 19 13
+
+Square g22 3 8
+
+Absorber g23 12 3 18 4
+
+Triangle g24 17 0
+Rotate g24
+
+Square g25 17 10
+
+RightFlipper g26 10 18
+
+Square g27 18 12
+
+Triangle g28 19 14
+Rotate g28
+
+Absorber g29 12 18 18 19
+
+Square g30 3 9
+
+Square g31 19 10
+
+Square g32 17 11
+
+RightFlipper g33 5 10
+
+
+Ball b34 5.25 16.25 0.0 10.0
+
+Connect g18 g18
+
+Connect g29 g7
+
+Connect g29 g26
+
+Connect g18 g2
+
+Connect g4 g4
+
+Connect g18 g33
+
+Connect g29 g29
+
+Connect g23 g23
+
+Connect g23 g14
+
+Connect g23 g0
+
+Connect g4 g10
+
+Connect g4 g3
+

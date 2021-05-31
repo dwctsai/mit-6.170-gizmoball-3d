@@ -1,0 +1,13 @@
+#!/usr/athena/bin/perl -w
+
+my $file = shift @ARGV;
+
+open(BALL_FILE, $file) or die "couldn't open $file";
+
+for my $i (0..20) {
+    for my $j (0..20) {
+	print "ball: $i, $j\n";
+    }
+}
+
+

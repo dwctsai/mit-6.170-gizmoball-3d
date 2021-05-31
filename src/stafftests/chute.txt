@@ -1,0 +1,164 @@
+Friction 0.0 0.0
+
+Square g0 4 2
+
+LeftFlipper g1 18 2
+
+Square g2 18 17
+
+Square g3 17 18
+
+Square g4 16 2
+
+Triangle g5 11 11
+Rotate g5
+
+Triangle g6 12 5
+Rotate g6
+Rotate g6
+
+Square g7 18 18
+
+Square g8 6 2
+
+Square g9 10 9
+
+Triangle g10 8 11
+Rotate g10
+Rotate g10
+Rotate g10
+
+Square g11 17 2
+
+Square g12 9 2
+
+Triangle g13 13 13
+Rotate g13
+
+Triangle g14 9 5
+
+Triangle g15 15 15
+Rotate g15
+
+Absorber g16 0 19 20 20
+
+Square g17 1 2
+
+Triangle g18 14 17
+Rotate g18
+Rotate g18
+Rotate g18
+
+Triangle g19 10 13
+Rotate g19
+Rotate g19
+Rotate g19
+
+Triangle g20 10 3
+Rotate g20
+Rotate g20
+Rotate g20
+
+Square g21 3 2
+
+Triangle g22 11 6
+Rotate g22
+Rotate g22
+
+Triangle g23 12 15
+Rotate g23
+Rotate g23
+Rotate g23
+
+Triangle g24 10 10
+Rotate g24
+
+Square g25 2 2
+
+Triangle g26 19 0
+Rotate g26
+
+Triangle g27 8 6
+
+Triangle g28 6 8
+
+Square g29 14 3
+
+Square g30 0 2
+
+Triangle g31 16 16
+Rotate g31
+
+Square g32 5 2
+
+Triangle g33 10 7
+Rotate g33
+Rotate g33
+
+Triangle g34 7 10
+Rotate g34
+Rotate g34
+Rotate g34
+
+Square g35 7 2
+
+Triangle g36 12 12
+Rotate g36
+
+Square g37 14 2
+
+Triangle g38 7 7
+
+Square g39 15 18
+
+Triangle g40 9 12
+Rotate g40
+Rotate g40
+Rotate g40
+
+Triangle g41 14 14
+Rotate g41
+
+Triangle g42 6 9
+Rotate g42
+Rotate g42
+Rotate g42
+
+Triangle g43 13 4
+Rotate g43
+Rotate g43
+
+Triangle g44 17 17
+Rotate g44
+
+Square g45 16 18
+
+Square g46 10 8
+
+Square g47 15 2
+
+Square g48 8 2
+
+Triangle g49 13 16
+Rotate g49
+Rotate g49
+Rotate g49
+
+Triangle g50 11 14
+Rotate g50
+Rotate g50
+Rotate g50
+
+Triangle g51 10 4
+
+
+Ball b52 19.5 16.5 0.0 0.0
+
+KeyConnect key 32 DOWN g1
+
+Connect g26 g1
+
+KeyConnect key 127 DOWN g16
+
+Connect g16 g16
+

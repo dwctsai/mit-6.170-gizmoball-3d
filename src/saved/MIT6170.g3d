@@ -1,0 +1,1238 @@
+TriangleA TStad_0_5_0 0 5 0 1
+Rotate TStad_0_5_0 XZ
+TriangleA TStad_0_4_0 0 4 0 1
+Rotate TStad_0_4_0 XZ
+Rotate TStad_0_4_0 YZ
+Rotate TStad_0_4_0 YZ
+TriangleA TStad_1_5_0 1 5 0 1
+Rotate TStad_1_5_0 XZ
+TriangleA TStad_1_4_0 1 4 0 1
+Rotate TStad_1_4_0 XZ
+Rotate TStad_1_4_0 YZ
+Rotate TStad_1_4_0 YZ
+TriangleA TStad_2_5_0 2 5 0 1
+Rotate TStad_2_5_0 XZ
+TriangleA TStad_2_4_0 2 4 0 1
+Rotate TStad_2_4_0 XZ
+Rotate TStad_2_4_0 YZ
+Rotate TStad_2_4_0 YZ
+TriangleA TStad_3_5_0 3 5 0 1
+Rotate TStad_3_5_0 XZ
+TriangleA TStad_3_4_0 3 4 0 1
+Rotate TStad_3_4_0 XZ
+Rotate TStad_3_4_0 YZ
+Rotate TStad_3_4_0 YZ
+TriangleA TStad_4_5_0 4 5 0 1
+Rotate TStad_4_5_0 XZ
+TriangleA TStad_4_4_0 4 4 0 1
+Rotate TStad_4_4_0 XZ
+Rotate TStad_4_4_0 YZ
+Rotate TStad_4_4_0 YZ
+TriangleA TStad_5_5_0 5 5 0 1
+Rotate TStad_5_5_0 XZ
+TriangleA TStad_5_4_0 5 4 0 1
+Rotate TStad_5_4_0 XZ
+Rotate TStad_5_4_0 YZ
+Rotate TStad_5_4_0 YZ
+TriangleA TStad_6_5_0 6 5 0 1
+Rotate TStad_6_5_0 XZ
+TriangleA TStad_6_4_0 6 4 0 1
+Rotate TStad_6_4_0 XZ
+Rotate TStad_6_4_0 YZ
+Rotate TStad_6_4_0 YZ
+TriangleA TStad_7_5_0 7 5 0 1
+Rotate TStad_7_5_0 XZ
+TriangleA TStad_7_4_0 7 4 0 1
+Rotate TStad_7_4_0 XZ
+Rotate TStad_7_4_0 YZ
+Rotate TStad_7_4_0 YZ
+TriangleA TStad_8_5_0 8 5 0 1
+Rotate TStad_8_5_0 XZ
+TriangleA TStad_8_4_0 8 4 0 1
+Rotate TStad_8_4_0 XZ
+Rotate TStad_8_4_0 YZ
+Rotate TStad_8_4_0 YZ
+TriangleA TStad_9_5_0 9 5 0 1
+Rotate TStad_9_5_0 XZ
+TriangleA TStad_9_4_0 9 4 0 1
+Rotate TStad_9_4_0 XZ
+Rotate TStad_9_4_0 YZ
+Rotate TStad_9_4_0 YZ
+TriangleA TStad_10_5_0 10 5 0 1
+Rotate TStad_10_5_0 XZ
+TriangleA TStad_10_4_0 10 4 0 1
+Rotate TStad_10_4_0 XZ
+Rotate TStad_10_4_0 YZ
+Rotate TStad_10_4_0 YZ
+TriangleA TStad_11_5_0 11 5 0 1
+Rotate TStad_11_5_0 XZ
+TriangleA TStad_11_4_0 11 4 0 1
+Rotate TStad_11_4_0 XZ
+Rotate TStad_11_4_0 YZ
+Rotate TStad_11_4_0 YZ
+TriangleA TStad_12_5_0 12 5 0 1
+Rotate TStad_12_5_0 XZ
+TriangleA TStad_12_4_0 12 4 0 1
+Rotate TStad_12_4_0 XZ
+Rotate TStad_12_4_0 YZ
+Rotate TStad_12_4_0 YZ
+TriangleA TStad_13_5_0 13 5 0 1
+Rotate TStad_13_5_0 XZ
+TriangleA TStad_13_4_0 13 4 0 1
+Rotate TStad_13_4_0 XZ
+Rotate TStad_13_4_0 YZ
+Rotate TStad_13_4_0 YZ
+TriangleA TStad_14_5_0 14 5 0 1
+Rotate TStad_14_5_0 XZ
+TriangleA TStad_14_4_0 14 4 0 1
+Rotate TStad_14_4_0 XZ
+Rotate TStad_14_4_0 YZ
+Rotate TStad_14_4_0 YZ
+TriangleA TStad_15_5_0 15 5 0 1
+Rotate TStad_15_5_0 XZ
+TriangleA TStad_15_4_0 15 4 0 1
+Rotate TStad_15_4_0 XZ
+Rotate TStad_15_4_0 YZ
+Rotate TStad_15_4_0 YZ
+TriangleA TStad_16_5_0 16 5 0 1
+Rotate TStad_16_5_0 XZ
+TriangleA TStad_16_4_0 16 4 0 1
+Rotate TStad_16_4_0 XZ
+Rotate TStad_16_4_0 YZ
+Rotate TStad_16_4_0 YZ
+TriangleA TStad_17_5_0 17 5 0 1
+Rotate TStad_17_5_0 XZ
+TriangleA TStad_17_4_0 17 4 0 1
+Rotate TStad_17_4_0 XZ
+Rotate TStad_17_4_0 YZ
+Rotate TStad_17_4_0 YZ
+TriangleA TStad_18_5_0 18 5 0 1
+Rotate TStad_18_5_0 XZ
+TriangleA TStad_18_4_0 18 4 0 1
+Rotate TStad_18_4_0 XZ
+Rotate TStad_18_4_0 YZ
+Rotate TStad_18_4_0 YZ
+TriangleA TStad_19_5_0 19 5 0 1
+Rotate TStad_19_5_0 XZ
+TriangleA TStad_19_4_0 19 4 0 1
+Rotate TStad_19_4_0 XZ
+Rotate TStad_19_4_0 YZ
+Rotate TStad_19_4_0 YZ
+Cube CStad_0_4_1 0 4 1 1
+Cube CStad_1_4_1 1 4 1 1
+Cube CStad_2_4_1 2 4 1 1
+Cube CStad_2_0_1 2 0 1 1
+Cube CStad_2_1_1 2 1 1 1
+Cube CStad_2_2_1 2 2 1 1
+Cube CStad_2_3_1 2 3 1 1
+Cube CStad_3_4_1 3 4 1 1
+Cube CStad_4_4_1 4 4 1 1
+Cube CStad_5_4_1 5 4 1 1
+Cube CStad_6_4_1 6 4 1 1
+Cube CStad_7_4_1 7 4 1 1
+Cube CStad_7_0_1 7 0 1 1
+Cube CStad_7_1_1 7 1 1 1
+Cube CStad_7_2_1 7 2 1 1
+Cube CStad_7_3_1 7 3 1 1
+Cube CStad_8_4_1 8 4 1 1
+Cube CStad_9_4_1 9 4 1 1
+Cube CStad_10_4_1 10 4 1 1
+Cube CStad_11_4_1 11 4 1 1
+Cube CStad_12_4_1 12 4 1 1
+Cube CStad_12_0_1 12 0 1 1
+Cube CStad_12_1_1 12 1 1 1
+Cube CStad_12_2_1 12 2 1 1
+Cube CStad_12_3_1 12 3 1 1
+Cube CStad_13_4_1 13 4 1 1
+Cube CStad_14_4_1 14 4 1 1
+Cube CStad_15_4_1 15 4 1 1
+Cube CStad_16_4_1 16 4 1 1
+Cube CStad_17_4_1 17 4 1 1
+Cube CStad_17_0_1 17 0 1 1
+Cube CStad_17_1_1 17 1 1 1
+Cube CStad_17_2_1 17 2 1 1
+Cube CStad_17_3_1 17 3 1 1
+Cube CStad_18_4_1 18 4 1 1
+Cube CStad_19_4_1 19 4 1 1
+Cube CStad_0_4_2 0 4 2 1
+Cube CStad_1_4_2 1 4 2 1
+Cube CStad_2_4_2 2 4 2 1
+Cube CStad_3_4_2 3 4 2 1
+Cube CStad_4_4_2 4 4 2 1
+Cube CStad_5_4_2 5 4 2 1
+Cube CStad_6_4_2 6 4 2 1
+Cube CStad_7_4_2 7 4 2 1
+Cube CStad_8_4_2 8 4 2 1
+Cube CStad_9_4_2 9 4 2 1
+Cube CStad_10_4_2 10 4 2 1
+Cube CStad_11_4_2 11 4 2 1
+Cube CStad_12_4_2 12 4 2 1
+Cube CStad_13_4_2 13 4 2 1
+Cube CStad_14_4_2 14 4 2 1
+Cube CStad_15_4_2 15 4 2 1
+Cube CStad_16_4_2 16 4 2 1
+Cube CStad_17_4_2 17 4 2 1
+Cube CStad_18_4_2 18 4 2 1
+Cube CStad_19_4_2 19 4 2 1
+TriangleA TStad_0_4_3 0 4 3 1
+Rotate TStad_0_4_3 XZ
+TriangleA TStad_0_3_3 0 3 3 1
+Rotate TStad_0_3_3 XZ
+Rotate TStad_0_3_3 ZY
+Rotate TStad_0_3_3 ZY
+TriangleA TStad_1_4_3 1 4 3 1
+Rotate TStad_1_4_3 XZ
+TriangleA TStad_1_3_3 1 3 3 1
+Rotate TStad_1_3_3 XZ
+Rotate TStad_1_3_3 ZY
+Rotate TStad_1_3_3 ZY
+TriangleA TStad_2_4_3 2 4 3 1
+Rotate TStad_2_4_3 XZ
+TriangleA TStad_2_3_3 2 3 3 1
+Rotate TStad_2_3_3 XZ
+Rotate TStad_2_3_3 ZY
+Rotate TStad_2_3_3 ZY
+TriangleA TStad_3_4_3 3 4 3 1
+Rotate TStad_3_4_3 XZ
+TriangleA TStad_3_3_3 3 3 3 1
+Rotate TStad_3_3_3 XZ
+Rotate TStad_3_3_3 ZY
+Rotate TStad_3_3_3 ZY
+TriangleA TStad_4_4_3 4 4 3 1
+Rotate TStad_4_4_3 XZ
+TriangleA TStad_4_3_3 4 3 3 1
+Rotate TStad_4_3_3 XZ
+Rotate TStad_4_3_3 ZY
+Rotate TStad_4_3_3 ZY
+TriangleA TStad_5_4_3 5 4 3 1
+Rotate TStad_5_4_3 XZ
+TriangleA TStad_5_3_3 5 3 3 1
+Rotate TStad_5_3_3 XZ
+Rotate TStad_5_3_3 ZY
+Rotate TStad_5_3_3 ZY
+TriangleA TStad_6_4_3 6 4 3 1
+Rotate TStad_6_4_3 XZ
+TriangleA TStad_6_3_3 6 3 3 1
+Rotate TStad_6_3_3 XZ
+Rotate TStad_6_3_3 ZY
+Rotate TStad_6_3_3 ZY
+TriangleA TStad_7_4_3 7 4 3 1
+Rotate TStad_7_4_3 XZ
+TriangleA TStad_7_3_3 7 3 3 1
+Rotate TStad_7_3_3 XZ
+Rotate TStad_7_3_3 ZY
+Rotate TStad_7_3_3 ZY
+TriangleA TStad_8_4_3 8 4 3 1
+Rotate TStad_8_4_3 XZ
+TriangleA TStad_8_3_3 8 3 3 1
+Rotate TStad_8_3_3 XZ
+Rotate TStad_8_3_3 ZY
+Rotate TStad_8_3_3 ZY
+TriangleA TStad_9_4_3 9 4 3 1
+Rotate TStad_9_4_3 XZ
+TriangleA TStad_9_3_3 9 3 3 1
+Rotate TStad_9_3_3 XZ
+Rotate TStad_9_3_3 ZY
+Rotate TStad_9_3_3 ZY
+TriangleA TStad_10_4_3 10 4 3 1
+Rotate TStad_10_4_3 XZ
+TriangleA TStad_10_3_3 10 3 3 1
+Rotate TStad_10_3_3 XZ
+Rotate TStad_10_3_3 ZY
+Rotate TStad_10_3_3 ZY
+TriangleA TStad_11_4_3 11 4 3 1
+Rotate TStad_11_4_3 XZ
+TriangleA TStad_11_3_3 11 3 3 1
+Rotate TStad_11_3_3 XZ
+Rotate TStad_11_3_3 ZY
+Rotate TStad_11_3_3 ZY
+TriangleA TStad_12_4_3 12 4 3 1
+Rotate TStad_12_4_3 XZ
+TriangleA TStad_12_3_3 12 3 3 1
+Rotate TStad_12_3_3 XZ
+Rotate TStad_12_3_3 ZY
+Rotate TStad_12_3_3 ZY
+TriangleA TStad_13_4_3 13 4 3 1
+Rotate TStad_13_4_3 XZ
+TriangleA TStad_13_3_3 13 3 3 1
+Rotate TStad_13_3_3 XZ
+Rotate TStad_13_3_3 ZY
+Rotate TStad_13_3_3 ZY
+TriangleA TStad_14_4_3 14 4 3 1
+Rotate TStad_14_4_3 XZ
+TriangleA TStad_14_3_3 14 3 3 1
+Rotate TStad_14_3_3 XZ
+Rotate TStad_14_3_3 ZY
+Rotate TStad_14_3_3 ZY
+TriangleA TStad_15_4_3 15 4 3 1
+Rotate TStad_15_4_3 XZ
+TriangleA TStad_15_3_3 15 3 3 1
+Rotate TStad_15_3_3 XZ
+Rotate TStad_15_3_3 ZY
+Rotate TStad_15_3_3 ZY
+TriangleA TStad_16_4_3 16 4 3 1
+Rotate TStad_16_4_3 XZ
+TriangleA TStad_16_3_3 16 3 3 1
+Rotate TStad_16_3_3 XZ
+Rotate TStad_16_3_3 ZY
+Rotate TStad_16_3_3 ZY
+TriangleA TStad_17_4_3 17 4 3 1
+Rotate TStad_17_4_3 XZ
+TriangleA TStad_17_3_3 17 3 3 1
+Rotate TStad_17_3_3 XZ
+Rotate TStad_17_3_3 ZY
+Rotate TStad_17_3_3 ZY
+TriangleA TStad_18_4_3 18 4 3 1
+Rotate TStad_18_4_3 XZ
+TriangleA TStad_18_3_3 18 3 3 1
+Rotate TStad_18_3_3 XZ
+Rotate TStad_18_3_3 ZY
+Rotate TStad_18_3_3 ZY
+TriangleA TStad_19_4_3 19 4 3 1
+Rotate TStad_19_4_3 XZ
+TriangleA TStad_19_3_3 19 3 3 1
+Rotate TStad_19_3_3 XZ
+Rotate TStad_19_3_3 ZY
+Rotate TStad_19_3_3 ZY
+Cube CStad_0_3_4 0 3 4 1
+Cube CStad_1_3_4 1 3 4 1
+Cube CStad_2_3_4 2 3 4 1
+Cube CStad_2_0_4 2 0 4 1
+Cube CStad_2_1_4 2 1 4 1
+Cube CStad_2_2_4 2 2 4 1
+Cube CStad_3_3_4 3 3 4 1
+Cube CStad_4_3_4 4 3 4 1
+Cube CStad_5_3_4 5 3 4 1
+Cube CStad_6_3_4 6 3 4 1
+Cube CStad_7_3_4 7 3 4 1
+Cube CStad_7_0_4 7 0 4 1
+Cube CStad_7_1_4 7 1 4 1
+Cube CStad_7_2_4 7 2 4 1
+Cube CStad_8_3_4 8 3 4 1
+Cube CStad_9_3_4 9 3 4 1
+Cube CStad_10_3_4 10 3 4 1
+Cube CStad_11_3_4 11 3 4 1
+Cube CStad_12_3_4 12 3 4 1
+Cube CStad_12_0_4 12 0 4 1
+Cube CStad_12_1_4 12 1 4 1
+Cube CStad_12_2_4 12 2 4 1
+Cube CStad_13_3_4 13 3 4 1
+Cube CStad_14_3_4 14 3 4 1
+Cube CStad_15_3_4 15 3 4 1
+Cube CStad_16_3_4 16 3 4 1
+Cube CStad_17_3_4 17 3 4 1
+Cube CStad_17_0_4 17 0 4 1
+Cube CStad_17_1_4 17 1 4 1
+Cube CStad_17_2_4 17 2 4 1
+Cube CStad_18_3_4 18 3 4 1
+Cube CStad_19_3_4 19 3 4 1
+Cube CStad_0_3_5 0 3 5 1
+Cube CStad_1_3_5 1 3 5 1
+Cube CStad_2_3_5 2 3 5 1
+Cube CStad_3_3_5 3 3 5 1
+Cube CStad_4_3_5 4 3 5 1
+Cube CStad_5_3_5 5 3 5 1
+Cube CStad_6_3_5 6 3 5 1
+Cube CStad_7_3_5 7 3 5 1
+Cube CStad_8_3_5 8 3 5 1
+Cube CStad_9_3_5 9 3 5 1
+Cube CStad_10_3_5 10 3 5 1
+Cube CStad_11_3_5 11 3 5 1
+Cube CStad_12_3_5 12 3 5 1
+Cube CStad_13_3_5 13 3 5 1
+Cube CStad_14_3_5 14 3 5 1
+Cube CStad_15_3_5 15 3 5 1
+Cube CStad_16_3_5 16 3 5 1
+Cube CStad_17_3_5 17 3 5 1
+Cube CStad_18_3_5 18 3 5 1
+Cube CStad_19_3_5 19 3 5 1
+TriangleA TStad_0_3_6 0 3 6 1
+Rotate TStad_0_3_6 XZ
+TriangleA TStad_0_2_6 0 2 6 1
+Rotate TStad_0_2_6 XZ
+Rotate TStad_0_2_6 ZY
+Rotate TStad_0_2_6 ZY
+TriangleA TStad_1_3_6 1 3 6 1
+Rotate TStad_1_3_6 XZ
+TriangleA TStad_1_2_6 1 2 6 1
+Rotate TStad_1_2_6 XZ
+Rotate TStad_1_2_6 ZY
+Rotate TStad_1_2_6 ZY
+TriangleA TStad_2_3_6 2 3 6 1
+Rotate TStad_2_3_6 XZ
+TriangleA TStad_2_2_6 2 2 6 1
+Rotate TStad_2_2_6 XZ
+Rotate TStad_2_2_6 ZY
+Rotate TStad_2_2_6 ZY
+TriangleA TStad_3_3_6 3 3 6 1
+Rotate TStad_3_3_6 XZ
+TriangleA TStad_3_2_6 3 2 6 1
+Rotate TStad_3_2_6 XZ
+Rotate TStad_3_2_6 ZY
+Rotate TStad_3_2_6 ZY
+TriangleA TStad_4_3_6 4 3 6 1
+Rotate TStad_4_3_6 XZ
+TriangleA TStad_4_2_6 4 2 6 1
+Rotate TStad_4_2_6 XZ
+Rotate TStad_4_2_6 ZY
+Rotate TStad_4_2_6 ZY
+TriangleA TStad_5_3_6 5 3 6 1
+Rotate TStad_5_3_6 XZ
+TriangleA TStad_5_2_6 5 2 6 1
+Rotate TStad_5_2_6 XZ
+Rotate TStad_5_2_6 ZY
+Rotate TStad_5_2_6 ZY
+TriangleA TStad_6_3_6 6 3 6 1
+Rotate TStad_6_3_6 XZ
+TriangleA TStad_6_2_6 6 2 6 1
+Rotate TStad_6_2_6 XZ
+Rotate TStad_6_2_6 ZY
+Rotate TStad_6_2_6 ZY
+TriangleA TStad_7_3_6 7 3 6 1
+Rotate TStad_7_3_6 XZ
+TriangleA TStad_7_2_6 7 2 6 1
+Rotate TStad_7_2_6 XZ
+Rotate TStad_7_2_6 ZY
+Rotate TStad_7_2_6 ZY
+TriangleA TStad_8_3_6 8 3 6 1
+Rotate TStad_8_3_6 XZ
+TriangleA TStad_8_2_6 8 2 6 1
+Rotate TStad_8_2_6 XZ
+Rotate TStad_8_2_6 ZY
+Rotate TStad_8_2_6 ZY
+TriangleA TStad_9_3_6 9 3 6 1
+Rotate TStad_9_3_6 XZ
+TriangleA TStad_9_2_6 9 2 6 1
+Rotate TStad_9_2_6 XZ
+Rotate TStad_9_2_6 ZY
+Rotate TStad_9_2_6 ZY
+TriangleA TStad_10_3_6 10 3 6 1
+Rotate TStad_10_3_6 XZ
+TriangleA TStad_10_2_6 10 2 6 1
+Rotate TStad_10_2_6 XZ
+Rotate TStad_10_2_6 ZY
+Rotate TStad_10_2_6 ZY
+TriangleA TStad_11_3_6 11 3 6 1
+Rotate TStad_11_3_6 XZ
+TriangleA TStad_11_2_6 11 2 6 1
+Rotate TStad_11_2_6 XZ
+Rotate TStad_11_2_6 ZY
+Rotate TStad_11_2_6 ZY
+TriangleA TStad_12_3_6 12 3 6 1
+Rotate TStad_12_3_6 XZ
+TriangleA TStad_12_2_6 12 2 6 1
+Rotate TStad_12_2_6 XZ
+Rotate TStad_12_2_6 ZY
+Rotate TStad_12_2_6 ZY
+TriangleA TStad_13_3_6 13 3 6 1
+Rotate TStad_13_3_6 XZ
+TriangleA TStad_13_2_6 13 2 6 1
+Rotate TStad_13_2_6 XZ
+Rotate TStad_13_2_6 ZY
+Rotate TStad_13_2_6 ZY
+TriangleA TStad_14_3_6 14 3 6 1
+Rotate TStad_14_3_6 XZ
+TriangleA TStad_14_2_6 14 2 6 1
+Rotate TStad_14_2_6 XZ
+Rotate TStad_14_2_6 ZY
+Rotate TStad_14_2_6 ZY
+TriangleA TStad_15_3_6 15 3 6 1
+Rotate TStad_15_3_6 XZ
+TriangleA TStad_15_2_6 15 2 6 1
+Rotate TStad_15_2_6 XZ
+Rotate TStad_15_2_6 ZY
+Rotate TStad_15_2_6 ZY
+TriangleA TStad_16_3_6 16 3 6 1
+Rotate TStad_16_3_6 XZ
+TriangleA TStad_16_2_6 16 2 6 1
+Rotate TStad_16_2_6 XZ
+Rotate TStad_16_2_6 ZY
+Rotate TStad_16_2_6 ZY
+TriangleA TStad_17_3_6 17 3 6 1
+Rotate TStad_17_3_6 XZ
+TriangleA TStad_17_2_6 17 2 6 1
+Rotate TStad_17_2_6 XZ
+Rotate TStad_17_2_6 ZY
+Rotate TStad_17_2_6 ZY
+TriangleA TStad_18_3_6 18 3 6 1
+Rotate TStad_18_3_6 XZ
+TriangleA TStad_18_2_6 18 2 6 1
+Rotate TStad_18_2_6 XZ
+Rotate TStad_18_2_6 ZY
+Rotate TStad_18_2_6 ZY
+TriangleA TStad_19_3_6 19 3 6 1
+Rotate TStad_19_3_6 XZ
+TriangleA TStad_19_2_6 19 2 6 1
+Rotate TStad_19_2_6 XZ
+Rotate TStad_19_2_6 ZY
+Rotate TStad_19_2_6 ZY
+Cube CStad_0_2_7 0 2 7 1
+Cube CStad_1_2_7 1 2 7 1
+Cube CStad_2_2_7 2 2 7 1
+Cube CStad_2_0_7 2 0 7 1
+Cube CStad_2_1_7 2 1 7 1
+Cube CStad_3_2_7 3 2 7 1
+Cube CStad_4_2_7 4 2 7 1
+Cube CStad_5_2_7 5 2 7 1
+Cube CStad_6_2_7 6 2 7 1
+Cube CStad_7_2_7 7 2 7 1
+Cube CStad_7_0_7 7 0 7 1
+Cube CStad_7_1_7 7 1 7 1
+Cube CStad_8_2_7 8 2 7 1
+Cube CStad_9_2_7 9 2 7 1
+Cube CStad_10_2_7 10 2 7 1
+Cube CStad_11_2_7 11 2 7 1
+Cube CStad_12_2_7 12 2 7 1
+Cube CStad_12_0_7 12 0 7 1
+Cube CStad_12_1_7 12 1 7 1
+Cube CStad_13_2_7 13 2 7 1
+Cube CStad_14_2_7 14 2 7 1
+Cube CStad_15_2_7 15 2 7 1
+Cube CStad_16_2_7 16 2 7 1
+Cube CStad_17_2_7 17 2 7 1
+Cube CStad_17_0_7 17 0 7 1
+Cube CStad_17_1_7 17 1 7 1
+Cube CStad_18_2_7 18 2 7 1
+Cube CStad_19_2_7 19 2 7 1
+Cube CStad_0_2_8 0 2 8 1
+Cube CStad_1_2_8 1 2 8 1
+Cube CStad_2_2_8 2 2 8 1
+Cube CStad_3_2_8 3 2 8 1
+Cube CStad_4_2_8 4 2 8 1
+Cube CStad_5_2_8 5 2 8 1
+Cube CStad_6_2_8 6 2 8 1
+Cube CStad_7_2_8 7 2 8 1
+Cube CStad_8_2_8 8 2 8 1
+Cube CStad_9_2_8 9 2 8 1
+Cube CStad_10_2_8 10 2 8 1
+Cube CStad_11_2_8 11 2 8 1
+Cube CStad_12_2_8 12 2 8 1
+Cube CStad_13_2_8 13 2 8 1
+Cube CStad_14_2_8 14 2 8 1
+Cube CStad_15_2_8 15 2 8 1
+Cube CStad_16_2_8 16 2 8 1
+Cube CStad_17_2_8 17 2 8 1
+Cube CStad_18_2_8 18 2 8 1
+Cube CStad_19_2_8 19 2 8 1
+TriangleA TStad_0_2_9 0 2 9 1
+Rotate TStad_0_2_9 XZ
+TriangleA TStad_0_1_9 0 1 9 1
+Rotate TStad_0_1_9 XZ
+Rotate TStad_0_1_9 ZY
+Rotate TStad_0_1_9 ZY
+TriangleA TStad_1_2_9 1 2 9 1
+Rotate TStad_1_2_9 XZ
+TriangleA TStad_1_1_9 1 1 9 1
+Rotate TStad_1_1_9 XZ
+Rotate TStad_1_1_9 ZY
+Rotate TStad_1_1_9 ZY
+TriangleA TStad_2_2_9 2 2 9 1
+Rotate TStad_2_2_9 XZ
+TriangleA TStad_2_1_9 2 1 9 1
+Rotate TStad_2_1_9 XZ
+Rotate TStad_2_1_9 ZY
+Rotate TStad_2_1_9 ZY
+TriangleA TStad_3_2_9 3 2 9 1
+Rotate TStad_3_2_9 XZ
+TriangleA TStad_3_1_9 3 1 9 1
+Rotate TStad_3_1_9 XZ
+Rotate TStad_3_1_9 ZY
+Rotate TStad_3_1_9 ZY
+TriangleA TStad_4_2_9 4 2 9 1
+Rotate TStad_4_2_9 XZ
+TriangleA TStad_4_1_9 4 1 9 1
+Rotate TStad_4_1_9 XZ
+Rotate TStad_4_1_9 ZY
+Rotate TStad_4_1_9 ZY
+TriangleA TStad_5_2_9 5 2 9 1
+Rotate TStad_5_2_9 XZ
+TriangleA TStad_5_1_9 5 1 9 1
+Rotate TStad_5_1_9 XZ
+Rotate TStad_5_1_9 ZY
+Rotate TStad_5_1_9 ZY
+TriangleA TStad_6_2_9 6 2 9 1
+Rotate TStad_6_2_9 XZ
+TriangleA TStad_6_1_9 6 1 9 1
+Rotate TStad_6_1_9 XZ
+Rotate TStad_6_1_9 ZY
+Rotate TStad_6_1_9 ZY
+TriangleA TStad_7_2_9 7 2 9 1
+Rotate TStad_7_2_9 XZ
+TriangleA TStad_7_1_9 7 1 9 1
+Rotate TStad_7_1_9 XZ
+Rotate TStad_7_1_9 ZY
+Rotate TStad_7_1_9 ZY
+TriangleA TStad_8_2_9 8 2 9 1
+Rotate TStad_8_2_9 XZ
+TriangleA TStad_8_1_9 8 1 9 1
+Rotate TStad_8_1_9 XZ
+Rotate TStad_8_1_9 ZY
+Rotate TStad_8_1_9 ZY
+TriangleA TStad_9_2_9 9 2 9 1
+Rotate TStad_9_2_9 XZ
+TriangleA TStad_9_1_9 9 1 9 1
+Rotate TStad_9_1_9 XZ
+Rotate TStad_9_1_9 ZY
+Rotate TStad_9_1_9 ZY
+TriangleA TStad_10_2_9 10 2 9 1
+Rotate TStad_10_2_9 XZ
+TriangleA TStad_10_1_9 10 1 9 1
+Rotate TStad_10_1_9 XZ
+Rotate TStad_10_1_9 ZY
+Rotate TStad_10_1_9 ZY
+TriangleA TStad_11_2_9 11 2 9 1
+Rotate TStad_11_2_9 XZ
+TriangleA TStad_11_1_9 11 1 9 1
+Rotate TStad_11_1_9 XZ
+Rotate TStad_11_1_9 ZY
+Rotate TStad_11_1_9 ZY
+TriangleA TStad_12_2_9 12 2 9 1
+Rotate TStad_12_2_9 XZ
+TriangleA TStad_12_1_9 12 1 9 1
+Rotate TStad_12_1_9 XZ
+Rotate TStad_12_1_9 ZY
+Rotate TStad_12_1_9 ZY
+TriangleA TStad_13_2_9 13 2 9 1
+Rotate TStad_13_2_9 XZ
+TriangleA TStad_13_1_9 13 1 9 1
+Rotate TStad_13_1_9 XZ
+Rotate TStad_13_1_9 ZY
+Rotate TStad_13_1_9 ZY
+TriangleA TStad_14_2_9 14 2 9 1
+Rotate TStad_14_2_9 XZ
+TriangleA TStad_14_1_9 14 1 9 1
+Rotate TStad_14_1_9 XZ
+Rotate TStad_14_1_9 ZY
+Rotate TStad_14_1_9 ZY
+TriangleA TStad_15_2_9 15 2 9 1
+Rotate TStad_15_2_9 XZ
+TriangleA TStad_15_1_9 15 1 9 1
+Rotate TStad_15_1_9 XZ
+Rotate TStad_15_1_9 ZY
+Rotate TStad_15_1_9 ZY
+TriangleA TStad_16_2_9 16 2 9 1
+Rotate TStad_16_2_9 XZ
+TriangleA TStad_16_1_9 16 1 9 1
+Rotate TStad_16_1_9 XZ
+Rotate TStad_16_1_9 ZY
+Rotate TStad_16_1_9 ZY
+TriangleA TStad_17_2_9 17 2 9 1
+Rotate TStad_17_2_9 XZ
+TriangleA TStad_17_1_9 17 1 9 1
+Rotate TStad_17_1_9 XZ
+Rotate TStad_17_1_9 ZY
+Rotate TStad_17_1_9 ZY
+TriangleA TStad_18_2_9 18 2 9 1
+Rotate TStad_18_2_9 XZ
+TriangleA TStad_18_1_9 18 1 9 1
+Rotate TStad_18_1_9 XZ
+Rotate TStad_18_1_9 ZY
+Rotate TStad_18_1_9 ZY
+TriangleA TStad_19_2_9 19 2 9 1
+Rotate TStad_19_2_9 XZ
+TriangleA TStad_19_1_9 19 1 9 1
+Rotate TStad_19_1_9 XZ
+Rotate TStad_19_1_9 ZY
+Rotate TStad_19_1_9 ZY
+Cube CStad_0_1_10 0 1 10 1
+Cube CStad_1_1_10 1 1 10 1
+Cube CStad_2_1_10 2 1 10 1
+Cube CStad_2_0_10 2 0 10 1
+Cube CStad_3_1_10 3 1 10 1
+Cube CStad_4_1_10 4 1 10 1
+Cube CStad_5_1_10 5 1 10 1
+Cube CStad_6_1_10 6 1 10 1
+Cube CStad_7_1_10 7 1 10 1
+Cube CStad_7_0_10 7 0 10 1
+Cube CStad_8_1_10 8 1 10 1
+Cube CStad_9_1_10 9 1 10 1
+Cube CStad_10_1_10 10 1 10 1
+Cube CStad_11_1_10 11 1 10 1
+Cube CStad_12_1_10 12 1 10 1
+Cube CStad_12_0_10 12 0 10 1
+Cube CStad_13_1_10 13 1 10 1
+Cube CStad_14_1_10 14 1 10 1
+Cube CStad_15_1_10 15 1 10 1
+Cube CStad_16_1_10 16 1 10 1
+Cube CStad_17_1_10 17 1 10 1
+Cube CStad_17_0_10 17 0 10 1
+Cube CStad_18_1_10 18 1 10 1
+Cube CStad_19_1_10 19 1 10 1
+Cube CStad_0_1_11 0 1 11 1
+Cube CStad_1_1_11 1 1 11 1
+Cube CStad_2_1_11 2 1 11 1
+Cube CStad_3_1_11 3 1 11 1
+Cube CStad_4_1_11 4 1 11 1
+Cube CStad_5_1_11 5 1 11 1
+Cube CStad_6_1_11 6 1 11 1
+Cube CStad_7_1_11 7 1 11 1
+Cube CStad_8_1_11 8 1 11 1
+Cube CStad_9_1_11 9 1 11 1
+Cube CStad_10_1_11 10 1 11 1
+Cube CStad_11_1_11 11 1 11 1
+Cube CStad_12_1_11 12 1 11 1
+Cube CStad_13_1_11 13 1 11 1
+Cube CStad_14_1_11 14 1 11 1
+Cube CStad_15_1_11 15 1 11 1
+Cube CStad_16_1_11 16 1 11 1
+Cube CStad_17_1_11 17 1 11 1
+Cube CStad_18_1_11 18 1 11 1
+Cube CStad_19_1_11 19 1 11 1
+TriangleA TStad_0_1_12 0 1 12 1
+Rotate TStad_0_1_12 XZ
+TriangleA TStad_0_0_12 0 0 12 1
+Rotate TStad_0_0_12 XZ
+Rotate TStad_0_0_12 ZY
+Rotate TStad_0_0_12 ZY
+TriangleA TStad_1_1_12 1 1 12 1
+Rotate TStad_1_1_12 XZ
+TriangleA TStad_1_0_12 1 0 12 1
+Rotate TStad_1_0_12 XZ
+Rotate TStad_1_0_12 ZY
+Rotate TStad_1_0_12 ZY
+TriangleA TStad_2_1_12 2 1 12 1
+Rotate TStad_2_1_12 XZ
+TriangleA TStad_2_0_12 2 0 12 1
+Rotate TStad_2_0_12 XZ
+Rotate TStad_2_0_12 ZY
+Rotate TStad_2_0_12 ZY
+TriangleA TStad_3_1_12 3 1 12 1
+Rotate TStad_3_1_12 XZ
+TriangleA TStad_3_0_12 3 0 12 1
+Rotate TStad_3_0_12 XZ
+Rotate TStad_3_0_12 ZY
+Rotate TStad_3_0_12 ZY
+TriangleA TStad_4_1_12 4 1 12 1
+Rotate TStad_4_1_12 XZ
+TriangleA TStad_4_0_12 4 0 12 1
+Rotate TStad_4_0_12 XZ
+Rotate TStad_4_0_12 ZY
+Rotate TStad_4_0_12 ZY
+TriangleA TStad_5_1_12 5 1 12 1
+Rotate TStad_5_1_12 XZ
+TriangleA TStad_5_0_12 5 0 12 1
+Rotate TStad_5_0_12 XZ
+Rotate TStad_5_0_12 ZY
+Rotate TStad_5_0_12 ZY
+TriangleA TStad_6_1_12 6 1 12 1
+Rotate TStad_6_1_12 XZ
+TriangleA TStad_6_0_12 6 0 12 1
+Rotate TStad_6_0_12 XZ
+Rotate TStad_6_0_12 ZY
+Rotate TStad_6_0_12 ZY
+TriangleA TStad_7_1_12 7 1 12 1
+Rotate TStad_7_1_12 XZ
+TriangleA TStad_7_0_12 7 0 12 1
+Rotate TStad_7_0_12 XZ
+Rotate TStad_7_0_12 ZY
+Rotate TStad_7_0_12 ZY
+TriangleA TStad_8_1_12 8 1 12 1
+Rotate TStad_8_1_12 XZ
+TriangleA TStad_8_0_12 8 0 12 1
+Rotate TStad_8_0_12 XZ
+Rotate TStad_8_0_12 ZY
+Rotate TStad_8_0_12 ZY
+TriangleA TStad_9_1_12 9 1 12 1
+Rotate TStad_9_1_12 XZ
+TriangleA TStad_9_0_12 9 0 12 1
+Rotate TStad_9_0_12 XZ
+Rotate TStad_9_0_12 ZY
+Rotate TStad_9_0_12 ZY
+TriangleA TStad_10_1_12 10 1 12 1
+Rotate TStad_10_1_12 XZ
+TriangleA TStad_10_0_12 10 0 12 1
+Rotate TStad_10_0_12 XZ
+Rotate TStad_10_0_12 ZY
+Rotate TStad_10_0_12 ZY
+TriangleA TStad_11_1_12 11 1 12 1
+Rotate TStad_11_1_12 XZ
+TriangleA TStad_11_0_12 11 0 12 1
+Rotate TStad_11_0_12 XZ
+Rotate TStad_11_0_12 ZY
+Rotate TStad_11_0_12 ZY
+TriangleA TStad_12_1_12 12 1 12 1
+Rotate TStad_12_1_12 XZ
+TriangleA TStad_12_0_12 12 0 12 1
+Rotate TStad_12_0_12 XZ
+Rotate TStad_12_0_12 ZY
+Rotate TStad_12_0_12 ZY
+TriangleA TStad_13_1_12 13 1 12 1
+Rotate TStad_13_1_12 XZ
+TriangleA TStad_13_0_12 13 0 12 1
+Rotate TStad_13_0_12 XZ
+Rotate TStad_13_0_12 ZY
+Rotate TStad_13_0_12 ZY
+TriangleA TStad_14_1_12 14 1 12 1
+Rotate TStad_14_1_12 XZ
+TriangleA TStad_14_0_12 14 0 12 1
+Rotate TStad_14_0_12 XZ
+Rotate TStad_14_0_12 ZY
+Rotate TStad_14_0_12 ZY
+TriangleA TStad_15_1_12 15 1 12 1
+Rotate TStad_15_1_12 XZ
+TriangleA TStad_15_0_12 15 0 12 1
+Rotate TStad_15_0_12 XZ
+Rotate TStad_15_0_12 ZY
+Rotate TStad_15_0_12 ZY
+TriangleA TStad_16_1_12 16 1 12 1
+Rotate TStad_16_1_12 XZ
+TriangleA TStad_16_0_12 16 0 12 1
+Rotate TStad_16_0_12 XZ
+Rotate TStad_16_0_12 ZY
+Rotate TStad_16_0_12 ZY
+TriangleA TStad_17_1_12 17 1 12 1
+Rotate TStad_17_1_12 XZ
+TriangleA TStad_17_0_12 17 0 12 1
+Rotate TStad_17_0_12 XZ
+Rotate TStad_17_0_12 ZY
+Rotate TStad_17_0_12 ZY
+TriangleA TStad_18_1_12 18 1 12 1
+Rotate TStad_18_1_12 XZ
+TriangleA TStad_18_0_12 18 0 12 1
+Rotate TStad_18_0_12 XZ
+Rotate TStad_18_0_12 ZY
+Rotate TStad_18_0_12 ZY
+TriangleA TStad_19_1_12 19 1 12 1
+Rotate TStad_19_1_12 XZ
+TriangleA TStad_19_0_12 19 0 12 1
+Rotate TStad_19_0_12 XZ
+Rotate TStad_19_0_12 ZY
+Rotate TStad_19_0_12 ZY
+Cube CStad_0_0_13 0 0 13 1
+Cube CStad_1_0_13 1 0 13 1
+Cube CStad_2_0_13 2 0 13 1
+Cube CStad_3_0_13 3 0 13 1
+Cube CStad_4_0_13 4 0 13 1
+Cube CStad_5_0_13 5 0 13 1
+Cube CStad_6_0_13 6 0 13 1
+Cube CStad_7_0_13 7 0 13 1
+Cube CStad_8_0_13 8 0 13 1
+Cube CStad_9_0_13 9 0 13 1
+Cube CStad_10_0_13 10 0 13 1
+Cube CStad_11_0_13 11 0 13 1
+Cube CStad_12_0_13 12 0 13 1
+Cube CStad_13_0_13 13 0 13 1
+Cube CStad_14_0_13 14 0 13 1
+Cube CStad_15_0_13 15 0 13 1
+Cube CStad_16_0_13 16 0 13 1
+Cube CStad_17_0_13 17 0 13 1
+Cube CStad_18_0_13 18 0 13 1
+Cube CStad_19_0_13 19 0 13 1
+Cube CStad_0_0_14 0 0 14 1
+Cube CStad_1_0_14 1 0 14 1
+Cube CStad_2_0_14 2 0 14 1
+Cube CStad_3_0_14 3 0 14 1
+Cube CStad_4_0_14 4 0 14 1
+Cube CStad_5_0_14 5 0 14 1
+Cube CStad_6_0_14 6 0 14 1
+Cube CStad_7_0_14 7 0 14 1
+Cube CStad_8_0_14 8 0 14 1
+Cube CStad_9_0_14 9 0 14 1
+Cube CStad_10_0_14 10 0 14 1
+Cube CStad_11_0_14 11 0 14 1
+Cube CStad_12_0_14 12 0 14 1
+Cube CStad_13_0_14 13 0 14 1
+Cube CStad_14_0_14 14 0 14 1
+Cube CStad_15_0_14 15 0 14 1
+Cube CStad_16_0_14 16 0 14 1
+Cube CStad_17_0_14 17 0 14 1
+Cube CStad_18_0_14 18 0 14 1
+Cube CStad_19_0_14 19 0 14 1
+TriangleA TStad_0_0_15 0 0 15 1
+Rotate TStad_0_0_15 XZ
+TriangleA TStad_1_0_15 1 0 15 1
+Rotate TStad_1_0_15 XZ
+TriangleA TStad_2_0_15 2 0 15 1
+Rotate TStad_2_0_15 XZ
+TriangleA TStad_3_0_15 3 0 15 1
+Rotate TStad_3_0_15 XZ
+TriangleA TStad_4_0_15 4 0 15 1
+Rotate TStad_4_0_15 XZ
+TriangleA TStad_5_0_15 5 0 15 1
+Rotate TStad_5_0_15 XZ
+TriangleA TStad_6_0_15 6 0 15 1
+Rotate TStad_6_0_15 XZ
+TriangleA TStad_7_0_15 7 0 15 1
+Rotate TStad_7_0_15 XZ
+TriangleA TStad_8_0_15 8 0 15 1
+Rotate TStad_8_0_15 XZ
+TriangleA TStad_9_0_15 9 0 15 1
+Rotate TStad_9_0_15 XZ
+TriangleA TStad_10_0_15 10 0 15 1
+Rotate TStad_10_0_15 XZ
+TriangleA TStad_11_0_15 11 0 15 1
+Rotate TStad_11_0_15 XZ
+TriangleA TStad_12_0_15 12 0 15 1
+Rotate TStad_12_0_15 XZ
+TriangleA TStad_13_0_15 13 0 15 1
+Rotate TStad_13_0_15 XZ
+TriangleA TStad_14_0_15 14 0 15 1
+Rotate TStad_14_0_15 XZ
+TriangleA TStad_15_0_15 15 0 15 1
+Rotate TStad_15_0_15 XZ
+TriangleA TStad_16_0_15 16 0 15 1
+Rotate TStad_16_0_15 XZ
+TriangleA TStad_17_0_15 17 0 15 1
+Rotate TStad_17_0_15 XZ
+TriangleA TStad_18_0_15 18 0 15 1
+Rotate TStad_18_0_15 XZ
+TriangleA TStad_19_0_15 19 0 15 1
+Rotate TStad_19_0_15 XZ
+Ball B_0_10_19 0.0 10.0 19.0 0.0 0.0 0.0 1.0
+Ball B_2_10_19 2.0 10.0 19.0 0.0 0.0 0.0 1.0
+Ball B_4_10_19 4.0 10.0 19.0 0.0 0.0 0.0 1.0
+Ball B_3_12_10 3.0 12.0 10.0 0.0 0.0 0.0 1.0
+Ball B_12_14_10 12.0 14.0 10.0 0.0 0.0 0.0 1.0
+Ball B_9_17_0 9.0 17.0 0.0 0.0 0.0 0.0 1.0
+Absorber A_0_0_19 0 0 19 20 1 20
+Connect A_0_0_19 A_0_0_19
+TriangleB TB_19_19_19 19 19 19 1
+Rotate TB_19_19_19 XZ
+Rotate TB_19_19_19 YZ
+Rotate TB_19_19_19 YZ
+TriangleA T_MIT6170_1_15_10 1 15 10 1.0
+Rotate T_MIT6170_1_15_10 XY
+Rotate T_MIT6170_1_15_10 XY
+Cube C_MIT6170_2_15_10 2 15 10 1.0
+TriangleA T_MIT6170_3_15_10 3 15 10 1.0
+TriangleA T_MIT6170_6_15_10 6 15 10 1.0
+Rotate T_MIT6170_6_15_10 XY
+Cube C_MIT6170_7_15_10 7 15 10 1.0
+TriangleA T_MIT6170_8_15_10 8 15 10 1.0
+Rotate T_MIT6170_8_15_10 YX
+TriangleA T_MIT6170_10_15_10 10 15 10 1.0
+Rotate T_MIT6170_10_15_10 XY
+Rotate T_MIT6170_10_15_10 XY
+Cube C_MIT6170_11_15_10 11 15 10 1.0
+TriangleA T_MIT6170_12_15_10 12 15 10 1.0
+Rotate T_MIT6170_12_15_10 YX
+Cube C_MIT6170_14_15_10 14 15 10 1.0
+Cube C_MIT6170_15_15_10 15 15 10 1.0
+Cube C_MIT6170_16_15_10 16 15 10 1.0
+Cube C_MIT6170_17_15_10 17 15 10 1.0
+Cube C_MIT6170_18_15_10 18 15 10 1.0
+Cube C_MIT6170_2_14_10 2 14 10 1.0
+TriangleA T_MIT6170_3_14_10 3 14 10 1.0
+Rotate T_MIT6170_3_14_10 XY
+Rotate T_MIT6170_3_14_10 XY
+TriangleA T_MIT6170_4_14_10 4 14 10 1.0
+TriangleA T_MIT6170_5_14_10 5 14 10 1.0
+Rotate T_MIT6170_5_14_10 XY
+TriangleA T_MIT6170_6_14_10 6 14 10 1.0
+Rotate T_MIT6170_6_14_10 YX
+Cube C_MIT6170_7_14_10 7 14 10 1.0
+Cube C_MIT6170_11_14_10 11 14 10 1.0
+TriangleA T_MIT6170_14_14_10 14 14 10 1.0
+Rotate T_MIT6170_14_14_10 YX
+Cube C_MIT6170_16_14_10 16 14 10 1.0
+TriangleA T_MIT6170_18_14_10 18 14 10 1.0
+Rotate T_MIT6170_18_14_10 XY
+Rotate T_MIT6170_18_14_10 XY
+Cube C_MIT6170_2_13_10 2 13 10 1.0
+TriangleA T_MIT6170_4_13_10 4 13 10 1.0
+Rotate T_MIT6170_4_13_10 XY
+Rotate T_MIT6170_4_13_10 XY
+TriangleA T_MIT6170_5_13_10 5 13 10 1.0
+Rotate T_MIT6170_5_13_10 YX
+Cube C_MIT6170_7_13_10 7 13 10 1.0
+Cube C_MIT6170_11_13_10 11 13 10 1.0
+Cube C_MIT6170_16_13_10 16 13 10 1.0
+Cube C_MIT6170_2_12_10 2 12 10 1.0
+Cube C_MIT6170_7_12_10 7 12 10 1.0
+Cube C_MIT6170_11_12_10 11 12 10 1.0
+Cube C_MIT6170_16_12_10 16 12 10 1.0
+TriangleA T_MIT6170_1_11_10 1 11 10 1.0
+Rotate T_MIT6170_1_11_10 XY
+Cube C_MIT6170_2_11_10 2 11 10 1.0
+TriangleA T_MIT6170_3_11_10 3 11 10 1.0
+TriangleA T_MIT6170_6_11_10 6 11 10 1.0
+Rotate T_MIT6170_6_11_10 XY
+Cube C_MIT6170_7_11_10 7 11 10 1.0
+TriangleA T_MIT6170_8_11_10 8 11 10 1.0
+TriangleA T_MIT6170_10_11_10 10 11 10 1.0
+Rotate T_MIT6170_10_11_10 XY
+Cube C_MIT6170_11_11_10 11 11 10 1.0
+TriangleA T_MIT6170_12_11_10 12 11 10 1.0
+TriangleA T_MIT6170_15_11_10 15 11 10 1.0
+Rotate T_MIT6170_15_11_10 XY
+Cube C_MIT6170_16_11_10 16 11 10 1.0
+TriangleA T_MIT6170_17_11_10 17 11 10 1.0
+TriangleA T_MIT6170_2_8_10 2 8 10 1.0
+Rotate T_MIT6170_2_8_10 XY
+Cube C_MIT6170_3_8_10 3 8 10 1.0
+TriangleA T_MIT6170_4_8_10 4 8 10 1.0
+TriangleA T_MIT6170_8_8_10 8 8 10 1.0
+Rotate T_MIT6170_8_8_10 XY
+Cube C_MIT6170_9_8_10 9 8 10 1.0
+TriangleA T_MIT6170_11_8_10 11 8 10 1.0
+Rotate T_MIT6170_11_8_10 XY
+Cube C_MIT6170_12_8_10 12 8 10 1.0
+Cube C_MIT6170_13_8_10 13 8 10 1.0
+TriangleA T_MIT6170_15_8_10 15 8 10 1.0
+Rotate T_MIT6170_15_8_10 XY
+Cube C_MIT6170_16_8_10 16 8 10 1.0
+TriangleA T_MIT6170_17_8_10 17 8 10 1.0
+Cube C_MIT6170_2_7_10 2 7 10 1.0
+Cube C_MIT6170_9_7_10 9 7 10 1.0
+Cube C_MIT6170_13_7_10 13 7 10 1.0
+Cube C_MIT6170_15_7_10 15 7 10 1.0
+Cube C_MIT6170_17_7_10 17 7 10 1.0
+Cube C_MIT6170_2_6_10 2 6 10 1.0
+Cube C_MIT6170_3_6_10 3 6 10 1.0
+TriangleA T_MIT6170_4_6_10 4 6 10 1.0
+Cube C_MIT6170_9_6_10 9 6 10 1.0
+TriangleA T_MIT6170_12_6_10 12 6 10 1.0
+Rotate T_MIT6170_12_6_10 XY
+TriangleA T_MIT6170_13_6_10 13 6 10 1.0
+Rotate T_MIT6170_13_6_10 YX
+Cube C_MIT6170_15_6_10 15 6 10 1.0
+Cube C_MIT6170_17_6_10 17 6 10 1.0
+Cube C_MIT6170_2_5_10 2 5 10 1.0
+Cube C_MIT6170_4_5_10 4 5 10 1.0
+Cube C_MIT6170_9_5_10 9 5 10 1.0
+Cube C_MIT6170_12_5_10 12 5 10 1.0
+Cube C_MIT6170_15_5_10 15 5 10 1.0
+Cube C_MIT6170_17_5_10 17 5 10 1.0
+TriangleA T_MIT6170_2_4_10 2 4 10 1.0
+Rotate T_MIT6170_2_4_10 YX
+Rotate T_MIT6170_2_4_10 YX
+Jezzmo J_MIT6170_3_4_10 3 4 10 5.0 1.0 z
+Connect C_MIT6170_11_11_10 J_MIT6170_3_4_10 grow
+Connect J_MIT6170_3_4_10 J_MIT6170_3_4_10 reset
+TriangleA T_MIT6170_4_4_10 4 4 10 1.0
+Rotate T_MIT6170_4_4_10 YX
+Sphere S_MIT6170_6_4_10 6 4 10 1.0
+TriangleA T_MIT6170_8_4_10 8 4 10 1.0
+Rotate T_MIT6170_8_4_10 XY
+Cube C_MIT6170_9_4_10 9 4 10 1.0
+TriangleA T_MIT6170_10_4_10 10 4 10 1.0
+Cube C_MIT6170_12_4_10 12 4 10 1.0
+TriangleA T_MIT6170_15_4_10 15 4 10 1.0
+Rotate T_MIT6170_15_4_10 YX
+Rotate T_MIT6170_15_4_10 YX
+Cube C_MIT6170_16_4_10 16 4 10 1.0
+TriangleA T_MIT6170_17_4_10 17 4 10 1.0
+Rotate T_MIT6170_17_4_10 YX
+Jezzmo J_MIT6170_19_18_0 19 18 0 10.0 1.0 z
+Connect J_MIT6170_3_4_10 J_MIT6170_19_18_0 grow
+Connect J_MIT6170_19_18_0 J_MIT6170_19_18_0 reset
+Cube C_MIT6170_19_19_0 19 19 0 1
+Flipper F_MIT6170_11_10_11 11 10 11 1.0 left
+Rotate F_MIT6170_11_10_11 XY
+Rotate F_MIT6170_11_10_11 XZ
+Connect J_MIT6170_3_4_10 F_MIT6170_11_10_11
+Connect F_MIT6170_11_10_11 F_MIT6170_11_10_11
+Jezzmo J_MIT6170_0_17_10 0 17 10 10.0 1.0 x
+Connect C_MIT6170_9_4_10 J_MIT6170_0_17_10 grow
+TriangleA T_0_19_16 0 19 16 1
+Rotate T_0_19_16 XZ
+Cube C_0_19_15 0 19 15 1
+TriangleA T_0_19_13 0 19 13 1
+Rotate T_0_19_13 XZ
+TriangleA T_0_19_12 0 19 12 1
+Rotate T_0_19_12 XZ
+Rotate T_0_19_12 ZY
+Rotate T_0_19_12 ZY
+TriangleA T_0_19_8 0 19 8 1
+Rotate T_0_19_8 XZ
+TriangleA T_0_19_7 0 19 7 1
+Rotate T_0_19_7 XZ
+Rotate T_0_19_7 ZY
+TriangleA T_0_19_5 0 19 5 1
+Rotate T_0_19_5 XZ
+Rotate T_0_19_5 ZY
+Cube C_0_19_4 0 19 4 1
+TriangleA T_0_19_2 0 19 2 1
+Rotate T_0_19_2 XZ
+TriangleA T_0_19_1 0 19 1 1
+Rotate T_0_19_1 XZ
+Rotate T_0_19_1 ZY
+TriangleA T_0_18_16 0 18 16 1
+Rotate T_0_18_16 XZ
+Rotate T_0_18_16 YZ
+TriangleA T_0_18_15 0 18 15 1
+Rotate T_0_18_15 XZ
+Rotate T_0_18_15 ZY
+Cube C_0_18_13 0 18 13 1
+Cube C_0_18_12 0 18 12 1
+Cube C_0_18_8 0 18 8 1
+Cube C_0_18_7 0 18 7 1
+Cube C_0_18_5 0 18 5 1
+Cube C_0_18_4 0 18 4 1
+TriangleA T_0_18_2 0 18 2 1
+Rotate T_0_18_2 XZ
+TriangleA T_0_18_1 0 18 1 1
+Rotate T_0_18_1 XZ
+Rotate T_0_18_1 ZY
+Rotate T_0_18_1 ZY
+Cube C_0_17_16 0 17 16 1
+TriangleA T_0_17_15 0 17 15 1
+Rotate T_0_17_15 XZ
+Rotate T_0_17_15 ZY
+Rotate T_0_17_15 ZY
+TriangleA T_0_17_13 0 17 13 1
+Rotate T_0_17_13 XZ
+Rotate T_0_17_13 YZ
+TriangleA T_0_17_12 0 17 12 1
+Rotate T_0_17_12 XZ
+Rotate T_0_17_12 ZY
+TriangleA T_0_17_8 0 17 8 1
+Rotate T_0_17_8 XZ
+Rotate T_0_17_8 YZ
+TriangleA T_0_17_7 0 17 7 1
+Rotate T_0_17_7 XZ
+Rotate T_0_17_7 ZY
+Rotate T_0_17_7 ZY
+Cube C_0_17_4 0 17 4 1
+Cube C_0_17_2 0 17 2 1
+Cube C_0_17_1 0 17 1 1
+TriangleA T_4_0_1 4 0 1 1
+Rotate T_4_0_1 YX
+TriangleA T_5_0_1 5 0 1 1
+Rotate T_5_0_1 YX
+Rotate T_5_0_1 YX
+TriangleA T_6_0_1 6 0 1 1
+Rotate T_6_0_1 YX
+TriangleA T_4_1_1 4 1 1 1
+TriangleA T_5_1_1 5 1 1 1
+Rotate T_5_1_1 XY
+TriangleA T_6_1_1 6 1 1 1
+TriangleA T_8_0_1 8 0 1 1
+Rotate T_8_0_1 YX
+TriangleA T_9_0_1 9 0 1 1
+Rotate T_9_0_1 YX
+Rotate T_9_0_1 YX
+Cube C_10_0_1 10 0 1 1
+TriangleA T_11_0_1 11 0 1 1
+Rotate T_11_0_1 YX
+TriangleA T_8_1_1 8 1 1 1
+TriangleA T_9_1_1 9 1 1 1
+Rotate T_9_1_1 XY
+Cube C_10_1_1 10 1 1 1
+TriangleA T_11_1_1 11 1 1 1
+TriangleA T_14_0_1 14 0 1 1
+Rotate T_14_0_1 YX
+TriangleA T_15_0_1 15 0 1 1
+Rotate T_15_0_1 YX
+Rotate T_15_0_1 YX
+TriangleA T_16_0_1 16 0 1 1
+Rotate T_16_0_1 YX
+TriangleA T_14_1_1 14 1 1 1
+TriangleA T_15_1_1 15 1 1 1
+Rotate T_15_1_1 XY
+TriangleA T_16_1_1 16 1 1 1
+TriangleA T_3_0_7 3 0 7 1
+Rotate T_3_0_7 YX
+TriangleA T_4_0_7 4 0 7 1
+Rotate T_4_0_7 YX
+Rotate T_4_0_7 YX
+TriangleA T_5_0_7 5 0 7 1
+Rotate T_5_0_7 YX
+TriangleA T_3_1_7 3 1 7 1
+TriangleA T_4_1_7 4 1 7 1
+Rotate T_4_1_7 XY
+TriangleA T_5_1_7 5 1 7 1
+TriangleA T_8_0_7 8 0 7 1
+Rotate T_8_0_7 YX
+TriangleA T_9_0_7 9 0 7 1
+Rotate T_9_0_7 YX
+Rotate T_9_0_7 YX
+TriangleA T_10_0_7 10 0 7 1
+Rotate T_10_0_7 YX
+TriangleA T_8_1_7 8 1 7 1
+TriangleA T_9_1_7 9 1 7 1
+Rotate T_9_1_7 XY
+TriangleA T_10_1_7 10 1 7 1
+TriangleA T_13_0_7 13 0 7 1
+Rotate T_13_0_7 YX
+TriangleA T_14_0_7 14 0 7 1
+Rotate T_14_0_7 YX
+Rotate T_14_0_7 YX
+TriangleA T_15_0_7 15 0 7 1
+Rotate T_15_0_7 YX
+TriangleA T_13_1_7 13 1 7 1
+TriangleA T_14_1_7 14 1 7 1
+Rotate T_14_1_7 XY
+TriangleA T_15_1_7 15 1 7 1
+TriangleA T_4_1_4 4 1 4 1
+Rotate T_4_1_4 YX
+Rotate T_4_1_4 YX
+TriangleA T_5_1_4 5 1 4 1
+Rotate T_5_1_4 YX
+TriangleA T_6_1_4 6 1 4 1
+Rotate T_6_1_4 YX
+Rotate T_6_1_4 YX
+TriangleA T_4_2_4 4 2 4 1
+Rotate T_4_2_4 XY
+TriangleA T_5_2_4 5 2 4 1
+TriangleA T_6_2_4 6 2 4 1
+Rotate T_6_2_4 XY
+TriangleA T_9_1_4 9 1 4 1
+Rotate T_9_1_4 YX
+Rotate T_9_1_4 YX
+TriangleA T_10_1_4 10 1 4 1
+Rotate T_10_1_4 YX
+TriangleA T_11_1_4 11 1 4 1
+Rotate T_11_1_4 YX
+Rotate T_11_1_4 YX
+TriangleA T_9_2_4 9 2 4 1
+Rotate T_9_2_4 XY
+TriangleA T_10_2_4 10 2 4 1
+TriangleA T_11_2_4 11 2 4 1
+Rotate T_11_2_4 XY
+TriangleA T_14_1_4 14 1 4 1
+Rotate T_14_1_4 YX
+Rotate T_14_1_4 YX
+TriangleA T_15_1_4 15 1 4 1
+Rotate T_15_1_4 YX
+TriangleA T_16_1_4 16 1 4 1
+Rotate T_16_1_4 YX
+Rotate T_16_1_4 YX
+TriangleA T_14_2_4 14 2 4 1
+Rotate T_14_2_4 XY
+TriangleA T_15_2_4 15 2 4 1
+TriangleA T_16_2_4 16 2 4 1
+Rotate T_16_2_4 XY
+TriangleA T_3_2_1 3 2 1 1
+Rotate T_3_2_1 YX
+Rotate T_3_2_1 YX
+Cube C_4_2_1 4 2 1 1
+TriangleA T_5_2_1 5 2 1 1
+Rotate T_5_2_1 YX
+TriangleA T_6_2_1 6 2 1 1
+Rotate T_6_2_1 YX
+Rotate T_6_2_1 YX
+TriangleA T_3_3_1 3 3 1 1
+Rotate T_3_3_1 XY
+Cube C_4_3_1 4 3 1 1
+TriangleA T_5_3_1 5 3 1 1
+TriangleA T_6_3_1 6 3 1 1
+Rotate T_6_3_1 XY
+TriangleA T_8_2_1 8 2 1 1
+Rotate T_8_2_1 YX
+Rotate T_8_2_1 YX
+TriangleA T_9_2_1 9 2 1 1
+Rotate T_9_2_1 YX
+TriangleA T_10_2_1 10 2 1 1
+Rotate T_10_2_1 YX
+Rotate T_10_2_1 YX
+TriangleA T_8_3_1 8 3 1 1
+Rotate T_8_3_1 XY
+TriangleA T_9_3_1 9 3 1 1
+TriangleA T_10_3_1 10 3 1 1
+Rotate T_10_3_1 XY
+TriangleA T_13_2_1 13 2 1 1
+Rotate T_13_2_1 YX
+Rotate T_13_2_1 YX
+Cube C_14_2_1 14 2 1 1
+TriangleA T_15_2_1 15 2 1 1
+Rotate T_15_2_1 YX
+TriangleA T_16_2_1 16 2 1 1
+Rotate T_16_2_1 YX
+Rotate T_16_2_1 YX
+TriangleA T_13_3_1 13 3 1 1
+Rotate T_13_3_1 XY
+Cube C_14_3_1 14 3 1 1
+TriangleA T_15_3_1 15 3 1 1
+TriangleA T_16_3_1 16 3 1 1
+Rotate T_16_3_1 XY

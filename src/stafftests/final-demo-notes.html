@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>6.170 - Gizmoball Final Demo Notes</title>
+</head>
+<body>
+
+<h2>Overview</h2>
+
+This message is a refined composite of previous terms' suggestions on demos,
+combined with additional material for this term, including our test case
+descriptions as well as grading.
+
+<h2>Preparation</h2>
+
+<p><li>
+Load and run the test case boards using the staff implementation.  You
+should know what each case should look like, so you have something to
+compare against.  Instructions for running our implementation and
+descriptions of the test cases are below.
+
+<p><li>
+Review your students documentation before going into the demo.  Make
+sure you have read their design and critique documents and have them
+fresh in your head.
+
+<h2>Staff implementation</h2>
+The staff implementation is in CVS under psets/gb/staff-solution. 
+Compile all the class in the GizmoBall directory, then run
+<tt>java -cp .:{$CLASSPATH} GizmoBall.GizmoFrame</tt>.
+
+<h2>Test Cases</h2>
+
+These test cases are found in /mit/6.170/staff/psets/gb/test.  I've
+found it most convenient to copy these to each groups' locker
+(/mit/6.170/groups/seMMN) before their demo.  That way they can get at
+them easily, or can edit them to remove problem commands if something
+causes it to choke.
+
+<p><li> choke.txt
+
+This file tests how the program handles bad input files.  A key is connected to a gizmo which doesn't exist.  A missing gizmo is rotated.  Three gizmos are placed at the square 19 0, and one is placed at 15 15.
+
+<p><li> chute.txt
+
+This file tests basic functionality.  The Gizmo should fire out of the
+absorber and hit the triangle, NOT hitting the flipper on the way up.  If it
+hits the flipper, take off points and reposition the ball up top.
+
+When the ball hits the triangle, the flipper should flip to the 'up'
+position and stay there.
+
+The ball should just bounce around.  Let it go for about 30 seconds and make
+sure that collisions appear reasonable and the ball doesn't fly through
+anything.  The exact trajectory the ball will take will vary among
+implementations.
+
+<p><li> absorber-blocked.txt
+
+This board tests absorber behavior.  If the exit of the absorber is blocked,
+anything may happen, but the program must not crash.  Some people may even
+disallow loading this board, which is fine, as long as the user is notified,
+and the program doesn't crash.
+
+<p><li> absorber-fun.txt
+
+This board tests absorber behavior.  Each absorber is tied to the pair of
+flippers which neighbors it, so when a ball hits the absorber, the flippers
+should flip.  The ball should start out by falling into the bottom absorber,
+and then get shot up into each successive absorber.  This also tests that
+absorbers which receive a ball from the bottom still grab it.
+
+<p><li> flipper-collision.txt
+
+This tests flipper collisions.  The flippers trigger themselves, and the row
+of squares on the bottom also trigger the flippers.  Check to make sure the
+collisions look realistic.
+
+<p><li> triangle-test.txt
+
+This tests the ball colliding with gizmos at the same time.  On some
+implementations, the ball will fall right through the gizmos.  The
+triangles are connected to the flippers, so simultaneous triggering
+can be tested as well (both flippers should flip when the ball hits
+the bottom).
+
+<p><li>many-balls.gb
+
+This creates 100 balls on the board, testing whether their implementation
+can meet the limit we gave them.  Watch the balls fall and collide for 
+at least several seconds. Check that the animation is still reasonably smooth and the program
+doesn't choke.
+
+<p><li> mouse-flip.txt
+
+This board tests mouse click triggering.  The left mouse button is connected to the bottom
+left flipper and the right mouse buttom is connect to the bottom right flipper.  Play with 
+their board to check that it works. Depending on the mouse you are using, the button mapping
+might be different.
+
+<p><li>jezz.txt
+
+This board tests the jezzmo functionality.
+The board contains six jezzmos.  The top two expand horizontally.  The two along the
+left and right outwalls expand vertically.  The middle two jessmos grow horizontally.
+When the lower ball falls into the absorber, it should trigger all 6 jezzmos to start growing.
+The upper balls should collide with the two middle jezzmos, making them reset.  The jezzmos
+along the walls should "collide" with each other correctly. If two jezzmos
+are heading for the same grid square, exactly one of them should grow to fill the square, the
+other should stop.
+
+
+<h2>Demo meeting strategy</h2>
+
+Taking a summary of past terms' strategies, this is what I'd recommend for demos.  You are, of course, free to do your own thing.
+
+<ol>
+<li>
+Student presentation of design and implementation.  Sit back and listen,
+but get them to move on if they're spending too much time on details, and to
+try to get other members to talk about their work.  The FP handout says:
+"Demonstrate your working program for your TA... give a brief presentation
+and answer questions pertaining to responsibilities in the development
+process."  If the team is asking for the 'best design' award, now might be a
+good time to have them argue their case, and for you to take notes
+(we are asking for one-page submission so they don't have to aruge for it
+if you don't need further explanation).
+
+<li>
+Briefly play with their implementation, exercising functionality which
+wasn't shown in their presentation.  Perhaps mention HCI and usability, or
+if they got frustrated with their own system when they were using it to make
+test cases.  Make sure you have seen:
+<ul>
+  <li> Loading of files
+  <li> Adding gizmos to a board
+  <li> Connecting things
+  <li> Can't place things on top of each other
+  <li> Keys trigger stuff in run mode
+</ul>
+
+<li>
+Try a few of our test cases.  I would do at least choke, chute, and
+flipper-collision.  I listed all of the test cases above in my recommended
+testing order.  Running them all (if you have time) is a good way to
+get the work done right away, and to get team input if there is a bug
+exposed.
+
+<li>
+Student demo of their own "interesting" pinball files, if they have
+any.  Also ask what remaining features they are proud of and would
+like to show off.  Teams which are asking for 'best game' or 'most
+artistic' should demo those entries now, with justification, and you
+should presumably take notes.
+
+<li>
+Query them about their design; how hard would be to support:
+<ul>
+  <li> Making the gizmos expand when the window is expanded
+  <li> Balls with different radii
+  <li> Gizmos that display images (possibly animated)
+  <li> Non-90-degree rotations of gizmos
+  <li> Ability to place gizmos anywhere (not just at grid positions)
+  <li> Non-20x20L board sizes
+  <li> Body english (balls are triggerable, and alter their velocity
+    for a short period of time (~200 ms)).
+  <li> Mulligan (Run mode undo), with, say, 1s resolution, 10s memory
+  <li> A robot arm gizmo that reaches out and tries to grab a ball
+    as its moving, and after doing so, sucks the ball inside of
+    itself and out its other end.  Felix says everyone claims
+    "our gizmos are completely expandable" but he is curious
+    as to whether they believe crazy cases are really possible
+</ul>
+
+<p>
+You shouldn't expect the students to be able to support all of these
+features trivially, or even at all.  However, these questions might help you
+get a feel for how well they understand their own design, both in its
+features and its drawbacks.
+
+<li>
+What would they have changed about their schedule in hindsight?
+What about their prototyping or testing strategies?
+
+</ol>
+
+</body>
+</html>
+
+

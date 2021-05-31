@@ -1,0 +1,60 @@
+Jezzmo J1 0 4 5.0 vertical
+Jezzmo J2 4 0 5.0 horizontal
+Jezzmo J3 14 0 5.0 horizontal
+Jezzmo J4 19 4 5.0 vertical
+Jezzmo J5 4 9 1.5 horizontal
+Jezzmo J6 14 9 1.5 horizontal
+Circle C1 9 0
+Absorber A1 8 19 12 20
+Ball B1 10 15 0 5
+Ball B2 4.5 2.5 0 3
+Ball B3 14.5 2.5 0 3
+Triangle T1 7 15
+Rotate T1
+Rotate T1
+Triangle T2 6 16
+Rotate T2
+Rotate T2
+Triangle T3 5 17
+Rotate T3
+Rotate T3
+Triangle T4 4 18
+Rotate T4
+Rotate T4
+Triangle T5 3 19
+Rotate T5
+Rotate T5
+Triangle T6 12 15
+Rotate T6
+Rotate T6
+Rotate T6
+Triangle T7 13 16
+Rotate T7
+Rotate T7
+Rotate T7
+Triangle T8 14 17
+Rotate T8
+Rotate T8
+Rotate T8
+Triangle T9 15 18
+Rotate T9
+Rotate T9
+Rotate T9
+
+
+Triangle T10 16 19
+Rotate T10
+Rotate T10
+Rotate T10
+
+
+
+
+Connect A1 J1 grow
+Connect A1 J2 grow
+Connect A1 J3 grow
+Connect A1 J4 grow
+Connect A1 J5 grow
+Connect A1 J6 grow
+Connect J6 J6 reset
+Connect J5 J5 reset
