@@ -1,1 +1,2 @@
-src/doc/* linguist-vendored
+* linguist-vendored
+*.java linguist-vendored=false
