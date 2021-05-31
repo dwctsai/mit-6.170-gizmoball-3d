@@ -2,7 +2,7 @@
 
 ## Overview
 
-- Gizmoball 3D is a pinball game made in Java 3D.  The objective is to keep a ball moving around a three-dimensional playing space without falling off the bottom of the map.
+- Gizmoball 3D is a pinball game made with Java 3D.  The objective is to keep a ball moving around a three-dimensional playing space without falling off the bottom of the map.
 
 - The program includes a game editor, where users can create their own custom game boards, as well as designate specific triggers between game pieces.
 
@@ -16,6 +16,7 @@
     <img src="media/gizmoball3d.jpg" width="500">
 </p>
 
+
 ## Installation
 
 Please download and unzip <a href="dist/gizmoball3d.zip">this file</a> from the "/dist" directory and follow the instructions in the "README.txt".
@@ -25,7 +26,7 @@ The installation requires the Java JRE runtime and "Java 3D 1.3.1", which is inc
 
 ## Design and Technical Specifications
 
-You can read the full technical design document at <a href="dist/Gizmoball3-Final_Design.pdf">this PDF</a> from the "/dist" directory.
+You can read the full technical design document at <a href="dist/Gizmoball3D-Final_Design.pdf">this PDF</a> from the "/dist" directory.
 
 
 ## The Team
