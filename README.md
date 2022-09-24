@@ -36,6 +36,6 @@ MIT 6.170 - Laboratory in Software Engineering (Spring 2003)<br>
 
 Gizmoball 3D was made by "Team se042":
 
-<strong>David Tsai</strong> - 3D Graphics Engine and GUI<br>
+<strong>David Tsai</strong> - 3D Graphics Engine, UI, and UX<br>
 <strong>Eric Tung</strong> - Physics Engine<br>
 <strong>Ragu Vijaykumar</strong> - Backend
